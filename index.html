@@ -106,7 +106,7 @@ button{font:inherit;color:inherit;cursor:pointer}
 .dot{width:10px;height:10px;border-radius:50%;background:var(--hc);flex:none}
 .bar{height:8px;border-radius:99px;background:var(--sunk);overflow:hidden}
 .bar>i{display:block;height:100%;background:var(--hc,var(--accent));border-radius:99px;max-width:100%}
-input[type=text],input[type=number],input[type=date],textarea,select{font:inherit;color:var(--ink);background:var(--sunk);border:1px solid transparent;border-radius:10px;padding:9px 11px;width:100%;min-width:0}
+input[type=text],input[type=number],input[type=date],input[type=time],input[type=email],textarea,select{font:inherit;color:var(--ink);background:var(--sunk);border:1px solid transparent;border-radius:10px;padding:9px 11px;width:100%;min-width:0}
 .ins input{background:var(--surface)} .ins .tick{background:var(--surface)}
 input:focus,textarea:focus,select:focus{border-color:var(--accent);outline:none}
 textarea{resize:vertical;min-height:70px}
@@ -138,6 +138,22 @@ label.f,.f{display:flex;flex-direction:column;gap:5px;font-size:13px;color:var(-
 .ins b{font-family:var(--f-display);font-weight:600}
 .tpl{display:flex;flex-direction:column;gap:6px;text-align:left;border:1px solid var(--line);background:var(--surface);border-radius:var(--r);padding:14px;box-shadow:var(--shadow)}
 .tpl:hover{border-color:var(--accent)}
+.tpl[aria-pressed="true"]{border-color:var(--accent);box-shadow:inset 0 0 0 1.5px var(--accent)}
+.tpl .hd{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.tpl .ck{width:22px;height:22px;border-radius:50%;border:2px solid var(--ink-3);flex:none;display:grid;place-items:center}
+.tpl[aria-pressed="true"] .ck{background:var(--accent);border-color:var(--accent)}
+.tpl[aria-pressed="true"] .ck::after{content:"";width:5px;height:10px;border:solid var(--on-accent);border-width:0 2.5px 2.5px 0;transform:rotate(45deg) translate(-1px,-1px)}
+.deck{position:relative;height:330px;touch-action:pan-y}
+.scard{position:absolute;inset:0;background:var(--surface);border:1px solid var(--line);border-radius:26px;padding:56px 22px 22px;display:flex;flex-direction:column;gap:10px;box-shadow:0 10px 30px rgba(18,23,34,.10);user-select:none;-webkit-user-select:none;touch-action:pan-y;cursor:grab;overflow:hidden}
+.scard.back{transform:scale(.94) translateY(12px);opacity:.55;pointer-events:none}
+.scard .say{font-family:var(--f-display);font-weight:700;font-size:30px;line-height:1.08;letter-spacing:-.02em;text-wrap:balance}
+.stamp{position:absolute;top:18px;font-family:var(--f-display);font-weight:700;font-size:14px;letter-spacing:.1em;padding:3px 10px;border-radius:8px;border:2px solid;opacity:0}
+.stamp.y{left:18px;color:var(--good)} .stamp.n{right:18px;color:var(--bad)}
+.sbtns{display:grid;grid-template-columns:1fr auto 1fr;gap:10px}
+.sbtns .btn{padding:14px 10px;font-size:15px}
+.sbtns .no{color:var(--bad)} .sbtns .yes{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+@media (prefers-reduced-motion:no-preference){.scard.fly{transition:transform .2s ease,opacity .2s ease}}
+.stick{position:sticky;bottom:calc(10px + env(safe-area-inset-bottom,0px));z-index:5;display:flex;flex-direction:column;gap:8px;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:12px;box-shadow:0 8px 24px rgba(0,0,0,.16)}
 .tpl b{font-family:var(--f-display);font-size:16px}
 .tpl .hs{display:flex;flex-wrap:wrap;gap:4px 10px;font-size:12px;color:var(--ink-2)}
 .tpl .hs span{display:inline-flex;align-items:center;gap:5px}
@@ -171,6 +187,7 @@ ul.lines{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:6px}
 @media (max-width:380px){.rings{grid-template-columns:112px 1fr}.big{font-size:34px}}
 @media (prefers-reduced-motion:no-preference){.ringarc{transition:stroke-dasharray .5s ease}}
 </style>
+<script src="./config.js"></script>
 </head>
 <body>
 <div class="wrap" id="app">
@@ -206,7 +223,7 @@ const dowOrder = () => ALL.map(i => (i + wsI()) % 7);
 /* ---------- library + templates ---------- */
 const P = (name,type,o={}) => ({name,type,...o});
 const LIB = {
-  "Health":[P("Drink water","count",{target:8,unit:"glasses",color:"c6"}), P("Sleep 7+ hours","count",{target:7,unit:"h",color:"c4",tod:"morning",q:"How many hours did you sleep?"}), P("In bed by 11pm","check",{color:"c4",tod:"evening"}),
+  "Health":[P("Drink water","count",{target:8,unit:"glasses",color:"c6"}), P("Sleep 7+ hours","count",{noScale:true,target:7,unit:"h",color:"c4",tod:"morning",q:"How many hours did you sleep?"}), P("In bed by 11pm","check",{color:"c4",tod:"evening"}),
     P("Take vitamins","check",{color:"c5",tod:"morning"}), P("Eat vegetables","count",{target:3,unit:"servings",color:"c3"}), P("No added sugar","check",{color:"c7"}), P("Floss","check",{color:"c6",tod:"evening"}),
     P("No alcohol","check",{color:"c8"}), P("Cook at home","check",{sch:{k:"week",n:5},color:"c5"})],
   "Fitness":[P("Workout","check",{sch:{k:"week",n:3},color:"c2"}), P("Run","count",{target:5,unit:"km",sch:{k:"week",n:3},color:"c2"}), P("Steps","count",{target:8000,unit:"steps",step:1000,color:"c3"}),
@@ -279,14 +296,14 @@ function queueWrite(id, get){
         if (e && e.code === "quota_exceeded") toast("Storage is full. Can't save.");
         else if (e && (e.code === "invalid_argument" || e.code === "revoked" || e.code === "not_granted")) goLocal("Saving on this device instead.");
         else toast("Couldn't save. Check your connection."); } }
-      if (S.mode === "local") LS.set(id, data);
+      if (S.mode === "local") { LS.set(id, data); if (S.afterWrite) S.afterWrite(id); }
       delete dirty[id];
     });
   }, 450);
 }
-const saveCfg = () => { render(); queueWrite("config", () => S.cfg); };
+const saveCfg = () => { if (S.cfg) S.cfg.u = Date.now(); render(); queueWrite("config", () => S.cfg); };
 const day = k => (S.months[k.slice(0,7)]?.d?.[k]) || {};
-function saveDay(k, patch){ const ym = k.slice(0,7), m = S.months[ym] || {d:{}}; S.months[ym] = {...m, d:{...m.d, [k]:{...(m.d[k]||{}), ...patch}}}; render(); queueWrite("m-"+ym, () => S.months[ym]); }
+function saveDay(k, patch){ const ym = k.slice(0,7), m = S.months[ym] || {d:{}}; S.months[ym] = {...m, d:{...m.d, [k]:{...(m.d[k]||{}), ...patch, u:Date.now()}}}; render(); queueWrite("m-"+ym, () => S.months[ym]); }
 const ent = (k,id) => day(k).h?.[id];
 const val = (k,id) => +ent(k,id) || 0;
 const skipped = (k,id) => !!day(k).s?.[id];
@@ -424,10 +441,52 @@ setInterval(() => { const t = getTimer(); if (!t) return; const left = t.dur*60 
   if (left <= 0) return stopTimer(true); const el = document.getElementById("timerDisplay"); if (el) el.textContent = `${pad(Math.floor(left/60))}:${pad(left%60)}`; }, 1000);
 
 /* ---------- onboarding ---------- */
+const AREAS = [["fit","Get fitter and stronger"],["student","Study or learn consistently"],["sleep","Sleep better"],["deep","Focus better at work"],["calm","Feel calmer and less stressed"],["morning","Have a solid morning routine"],["eat","Eat better"],["reader","Read more"],["detox","Spend less time on my phone"],["money","Get my money under control"],["home","Keep my home in order"],["cut","Cut back on something"],["job","Find a new job"],["side","Build something of my own"],["lang","Learn a language"]];
+const PACES = [["gentle","Gentle","Small targets you can't fail. Build up once it sticks."],["steady","Steady","The standard targets. A real stretch without being heroic."],["ambitious","Ambitious","Bigger targets and more days. For when you already have momentum."]];
+const newOb = () => ({step:"areas", i:0, yes:{}, pace:"steady", deck:[], all:[], hi:0, keep:{}});
+function scaleHabit(h, pace){ if (pace === "steady" || h.noScale) return h; const up = pace === "ambitious";
+  if (h.type !== "check" && h.target > 0) { const f = isMax(h) ? (up ? .75 : 1.5) : (up ? 1.5 : .5), q = h.type === "time" ? 5 : (h.step > 1 ? h.step : 1); h.target = Math.max(q, Math.round(h.target*f/q)*q); }
+  if (h.sch.k === "week") h.sch.n = Math.max(1, Math.min(7, h.sch.n + (up ? 1 : -1)));
+  return h; }
+function obBuild(){ const ob = S.ob; ob.all = []; ob.deck = []; ob.hi = 0; ob.keep = {};
+  AREAS.filter(([id]) => ob.yes[id]).forEach(([id]) => tplHabits(id).forEach((h,idx) => { if (ob.all.some(x=>x.name===h.name)) return; scaleHabit(h, ob.pace); h.area = TEMPLATES[id].name; ob.all.push(h); if (idx < 3 && ob.deck.length < 15) ob.deck.push(h); }));
+  ob.step = "habits"; }
+function obFinish(){ const ob = S.ob, anyYes = ob.deck.some(h=>ob.keep[h.id]), on = {};
+  ob.deck.forEach((h,idx) => { if (anyYes ? ob.keep[h.id] : idx >= ob.hi || ob.keep[h.id] !== false) on[h.id] = true; });
+  ob.all.forEach(h => { delete h.area; });
+  S.setup = {tpls:AREAS.filter(([id])=>ob.yes[id]).map(([id])=>id), habits:ob.all, on, mode: S.cfg && habits().length ? "add" : "replace"};
+  S.ob = null; S.onboarding = false; S.gallery = false; }
+function obSwipe(dir){ const ob = S.ob; if (!ob || ob.step === "pace") return;
+  if (ob.step === "areas") { ob.yes[AREAS[ob.i][0]] = dir > 0; ob.i++;
+    if (ob.i >= AREAS.length) { if (AREAS.some(([id])=>ob.yes[id])) ob.step = "pace"; else { S.ob = null; S.gallery = true; toast("Nothing picked. Browse the templates, or start blank."); } } }
+  else { ob.keep[ob.deck[ob.hi].id] = dir > 0; ob.hi++; if (ob.hi >= ob.deck.length) obFinish(); }
+  render(); }
+function obFly(dir){ const el = document.getElementById("swipeCard"); if (!el || matchMedia("(prefers-reduced-motion: reduce)").matches) return obSwipe(dir);
+  el.classList.add("fly"); el.style.transform = `translateX(${dir*130}%) rotate(${dir*14}deg)`; el.style.opacity = "0"; setTimeout(() => obSwipe(dir), 190); }
+function vSwipe(){
+  const ob = S.ob, alt = `<div class="row"><button class="btn sm grow" data-act="sw-gallery">Browse templates instead</button>${S.cfg ? `<button class="btn sm grow" data-act="tpl-cancel">Cancel</button>` : `<button class="btn sm grow" data-act="tpl-blank">Start blank</button>`}</div>`;
+  if (ob.step === "pace") { const n = AREAS.filter(([id])=>ob.yes[id]).length;
+    return `<div class="top"><div><div class="eyebrow">Step 2 of 3</div><h1>How hard do you want to start?</h1></div><button class="btn sm" data-act="sw-back">Back</button></div>
+      <p class="muted">You picked ${n} area${n===1?"":"s"}. This sets the size of the targets. You can change any of them afterwards.</p>
+      ${PACES.map(([id,name,d]) => `<button class="tpl" data-act="sw-pace" data-v="${id}"><b>${name}</b><span class="small muted">${d}</span></button>`).join("")}`; }
+  const areas = ob.step === "areas", n = areas ? AREAS.length : ob.deck.length, i = areas ? ob.i : ob.hi;
+  const face = j => { if (j >= n) return ""; if (areas) { const [id, say] = AREAS[j], t = TEMPLATES[id];
+      return `<div class="eyebrow">I want to</div><div class="say">${say}</div><p class="small muted">${t.desc}</p><span class="hs" style="display:flex;flex-wrap:wrap;gap:4px 10px;font-size:12px;color:var(--ink-2)">${t.list.slice(0,4).map(([nm,o])=>`<span style="display:inline-flex;align-items:center;gap:5px"><i style="width:7px;height:7px;border-radius:50%;display:block;background:var(--${(o?.color)||libFind(nm)?.color||"c1"})"></i>${esc(o?.name||nm)}</span>`).join("")}</span>`; }
+    const h = ob.deck[j]; return `<div class="eyebrow" style="color:${col(h)}">${esc(h.area)}</div><div class="say">${esc(h.name)}</div><p class="num small">${esc(schedLabel(h))}</p><p class="small muted">${h.q ? esc(h.q) : h.type === "time" && !isMax(h) ? "Tracked with a focus timer." : isMax(h) ? "A daily limit you log against." : h.type === "count" ? "Counted with a tap." : "A simple tick when it's done."}</p>`; };
+  return `<div class="top"><div><div class="eyebrow">Step ${areas?1:3} of 3</div><h1>${areas ? "What do you want more of?" : "Which of these would you do?"}</h1></div>${i > 0 || !areas ? `<button class="btn sm" data-act="sw-back">Back</button>` : ""}</div>
+    <p class="muted">Swipe right for yes, left for no. ${areas ? "There are no wrong answers, and you'll shape the details next." : "You can still change targets and add your own afterwards."}</p>
+    <div class="row between"><span class="num small muted">${Math.min(i+1,n)} of ${n}</span><div class="bar grow"><i style="width:${i/n*100}%"></i></div></div>
+    <div class="deck">${i+1 < n ? `<div class="scard back">${face(i+1)}</div>` : ""}<div class="scard" id="swipeCard" tabindex="0" aria-label="Swipe card. Use the Yes and No buttons, or the arrow keys."><span class="stamp n">NO</span><span class="stamp y">YES</span>${face(i)}</div></div>
+    <div class="sbtns"><button class="btn no" data-act="sw-no">Not for me</button><span></span><button class="btn yes" data-act="sw-yes">Yes</button></div>
+    ${areas ? alt : `<button class="btn sm" data-act="sw-skip">Skip the rest and see my list</button>`}`;
+}
 function vOnboard(){
-  return `<div class="top"><div><div class="eyebrow">Never Twice</div><h1>Pick a starting point</h1></div>${S.cfg ? `<button class="btn sm" data-act="tpl-cancel">Cancel</button>` : ""}</div>
-    <p class="muted">Miss a day if you have to. Never miss two. Choose a set to start from. On the next screen you can change every habit before you begin.</p>
-    ${Object.entries(TEMPLATES).map(([id,t]) => `<button class="tpl" data-act="tpl" data-v="${id}"><b>${t.name}</b><span class="small muted">${t.desc}</span>${t.list.length?`<span class="hs">${t.list.map(([n,o])=>`<span><i style="background:var(--${(o?.color)||libFind(n)?.color||"c1"})"></i>${esc(o?.name||n)}</span>`).join("")}</span>`:""}</button>`).join("")}`;
+  const pick = S.pick || (S.pick = {}), ids = Object.keys(pick).filter(k=>pick[k]), more = !!S.setup, names = new Set((S.setup?.habits||[]).map(h=>h.name)); let add = 0;
+  ids.forEach(id => TEMPLATES[id].list.forEach(([n,o]) => { const nm = o?.name||n; if (!names.has(nm)) { names.add(nm); add++; } }));
+  return `<div class="top"><div><div class="eyebrow">Never Twice</div><h1>${more?"Add more templates":"Pick a starting point"}</h1></div><button class="btn sm" data-act="${more||S.cfg ? "tpl-cancel" : "sw-start"}">${more ? "Back" : S.cfg ? "Cancel" : "Swipe instead"}</button></div>
+    <p class="muted">Tick one template or combine several. A habit that appears in more than one is added once, and you can change every habit on the next screen.</p>
+    ${Object.entries(TEMPLATES).filter(([id]) => id !== "blank" && !(S.setup?.tpls||[]).includes(id)).map(([id,t]) => `<button class="tpl" data-act="tpl-toggle" data-v="${id}" aria-pressed="${!!pick[id]}"><span class="hd"><b>${t.name}</b><span class="ck"></span></span><span class="small muted">${t.desc}</span><span class="hs">${t.list.map(([n,o])=>`<span><i style="background:var(--${(o?.color)||libFind(n)?.color||"c1"})"></i>${esc(o?.name||n)}</span>`).join("")}</span></button>`).join("")}
+    <div class="stick"><button class="btn primary" data-act="tpl-next" ${ids.length?"":"disabled"}>${ids.length ? `Continue with ${ids.length} template${ids.length===1?"":"s"} · ${add} habit${add===1?"":"s"}` : "Tick at least one template"}</button>${more ? "" : `<button class="btn" data-act="tpl-blank">Start blank and build my own</button>`}</div>`;
 }
 function quickFields(h, where){ // the numbers people most want to change, inline
   const a = `data-h="${h.id}" data-w="${where}"`;
@@ -438,15 +497,18 @@ function quickFields(h, where){ // the numbers people most want to change, inlin
   return amount || often ? `<div class="row">${amount}${often}</div>` : "";
 }
 function vSetup(){
-  const su = S.setup, n = su.habits.filter(h=>su.on[h.id]).length;
-  return `<div class="top"><div><div class="eyebrow">${esc(TEMPLATES[su.tpl].name)}</div><h1>Make it yours</h1></div><button class="btn sm" data-act="setup-back">Back</button></div>
+  const su = S.setup, have = new Set(habits().map(h=>h.name)), canAdd = !!(S.cfg && habits().length), addMode = canAdd && su.mode === "add";
+  const list = su.habits.filter(h => !(addMode && have.has(h.name))), dup = su.habits.length - list.length, n = list.filter(h=>su.on[h.id]).length;
+  return `<div class="top"><div style="min-width:0"><div class="eyebrow">${esc(su.tpls.map(id=>TEMPLATES[id].name).join(" + "))}</div><h1>Make it yours</h1></div>${S.cfg ? `<button class="btn sm" data-act="setup-cancel">Cancel</button>` : ""}</div>
     <p class="muted">Untick what you don't want. Change names, targets and how often. Everything stays editable later, along with colours, units, timers and more.</p>
-    ${su.habits.map(h => `<div class="card" style="--hc:${col(h)}">
+    ${canAdd ? `<div class="card"><div class="f">What should happen to the habits you already have?${seg("setup-mode", [["add","Keep them, add these"],["replace","Replace them"]], su.mode)}</div><p class="note">${addMode ? "Your current habits and their history stay as they are." : "Your current habits are removed from the list. Logged days are kept."}</p></div>` : ""}
+    ${list.map(h => `<div class="card" style="--hc:${col(h)}">
       ${tick("setup-on", su.on[h.id], h.name, schedLabel(h), `data-h="${h.id}"`)}
       ${su.on[h.id] ? `<label class="f">Name<input type="text" data-h="${h.id}" data-w="setup" data-f="name" value="${esc(h.name)}"></label>
         <div class="f">How often${seg("setup-sch", [["daily","Daily"],["days","Weekdays"],["week","Per week"],["interval","Every N days"]], h.sch.k === "month" ? "week" : h.sch.k, `data-h="${h.id}"`)}</div>${quickFields(h,"setup")}` : ""}</div>`).join("")}
-    <button class="btn" data-act="setup-add">Add another habit from the library</button>
-    <button class="btn primary" data-act="setup-go" ${n||su.tpl==="blank"?"":"disabled"}>Start with ${n} habit${n===1?"":"s"}</button>`;
+    ${dup ? `<p class="note">${dup} habit${dup===1?" is":"s are"} already in your list and left out here.</p>` : ""}
+    <div class="row"><button class="btn grow" data-act="setup-more">Add another template</button><button class="btn grow" data-act="setup-add">Add from the library</button></div>
+    <div class="stick"><button class="btn primary" data-act="setup-go" ${n || (!addMode && su.tpls.includes("blank")) ? "" : "disabled"}>${addMode ? `Add ${n} habit${n===1?"":"s"}` : `Start with ${n} habit${n===1?"":"s"}`}</button></div>`;
 }
 
 /* ---------- today ---------- */
@@ -482,7 +544,7 @@ function verdict(){
   const strong = hs.map(h=>({h, s:score(h)})).sort((a,b)=>b.s-a.s)[0]; if (strong && strong.s >= .5) lines.push(`Most established habit: ${strong.h.name}, strength ${Math.round(strong.s*100)}%.`);
   const risk = hs.filter(h => fixed(h) && scheduled(h,tk) && !skipped(tk,h.id) && !kept(h,tk) && streaks(h).cur >= 3);
   if (risk.length) lines.push(`Streaks on the line today: ${risk.map(h=>`${h.name} (${streaks(h).cur} days)`).join(", ")}.`);
-  const m = missed(); if (m.some(x=>x.twice)) lines.push(`You've missed ${m.filter(x=>x.twice).map(x=>x.h.name).join(", ")} twice in a row. That's the one rule. Do the smallest version today.`);
+  const m = missed(); if (m.some(x=>x.twice)) lines.push(S.cfg.tone === "gentle" ? `${m.filter(x=>x.twice).map(x=>x.h.name).join(", ")} has slipped two days running. A few minutes today is enough to get it back.` : `You've missed ${m.filter(x=>x.twice).map(x=>x.h.name).join(", ")} twice in a row. That's the one rule. Do the smallest version today.`);
   return lines;
 }
 function vToday(){
@@ -498,7 +560,7 @@ function vToday(){
   if (ms.length) { const twice = ms.some(x=>x.twice);
     const rescue = ms.filter(x=>x.h.type!=="check" && deficit(x.h) > 0).map(x => { const per = Math.ceil(deficit(x.h)/3);
       return `<div class="small"><b>${esc(x.h.name)}</b>: behind by <span class="num">${fmtV(x.h,Math.ceil(deficit(x.h)))}</span> this week. Next 3 days: ${[0,1,2].map(i=>`<span class="num">${fmtV(x.h, Math.round(dayTarget(x.h,key(addDays(t,i))))+per)}</span>`).join(", ")}.</div>`; }).join("");
-    html += `<div class="banner bad"><h3>${twice ? "Two misses in a row. This is the line." : "Missed yesterday. Today isn't optional."}</h3>
+    html += `<div class="banner bad"><h3>${c.tone === "gentle" ? (twice ? "Two days missed. Today, do the smallest version." : "Yesterday slipped. Pick one and start small.") : (twice ? "Two misses in a row. This is the line." : "Missed yesterday. Today isn't optional.")}</h3>
       <div class="small">${ms.map(x=>esc(x.h.name)).join(", ")}</div>${rescue}${c.why ? `<div class="why">${esc(c.why)}</div>` : ""}</div>`; }
   else if (isToday && total && nDone === total) html += `<div class="banner good"><h3>Everything due today is done.</h3><div class="small">${total} of ${total}. Set up tomorrow and stop here.</div></div>`;
   if (isToday) html += `<div class="card"><div class="row between"><h2>This week</h2><div class="row" style="gap:6px">${(c.goals||[]).slice(0,1).map(g=>`<span class="pill num">${Math.max(0,goalStats(g).days)}d · ${esc(g.name)}</span>`).join("")}<span class="pill num ${score_>=80?"good":score_>=55?"warn":"bad"}">Score ${score_}</span></div></div>
@@ -550,6 +612,7 @@ function editor(h){
     ${s.k === "days" ? `<div class="chips">${DOW.map((d,j)=>`<button class="chip" data-act="h-day" ${a} data-n="${j}" aria-pressed="${s.days.includes(j)}">${d}</button>`).join("")}</div>` : ""}
     ${s.k === "week" || s.k === "month" || s.k === "interval" ? `<label class="f">${s.k==="week"?"Times a week":s.k==="month"?"Times a month":"Every how many days"}<input type="number" min="${s.k==="interval"?2:1}" max="${s.k==="week"?7:s.k==="month"?31:90}" ${a} data-f="sch.n" value="${s.n}"></label>` : ""}
     <div class="f">Time of day${seg("h-tod", TOD, h.tod, a)}</div>
+    ${S.canRemind ? `<label class="f">Reminder time (optional)<input type="time" ${a} data-f="remind" value="${esc(h.remind||"")}"></label><p class="note">You get a notification at this time if the habit is still due. Clear the time to turn it off.</p>` : ""}
     <div class="f">Colour<div class="row">${PAL.map(p=>`<button class="sw" style="background:var(--${p})" data-act="h-color" ${a} data-v="${p}" aria-pressed="${h.color===p}" aria-label="Colour ${p.slice(1)}"></button>`).join("")}</div></div>
     ${tick("h-ring", h.ring, "Show as ring on Today", "Up to three habits", a)}
     <label class="f">Counts from<input type="date" ${a} data-f="start" value="${h.start}"></label>
@@ -598,7 +661,7 @@ function vDetail(h){
 function vAdd(){
   const have = new Set(allHabits().concat(S.setup?.habits||[]).map(h=>h.name));
   return `<div class="top"><div><div class="eyebrow">Habit library</div><h1>Add a habit</h1></div><button class="btn sm" data-act="add-close">Back</button></div>
-    <button class="btn primary" data-act="lib" data-v="">Create your own from scratch</button>
+    <div class="row"><button class="btn primary grow" data-act="lib" data-v="">Create your own</button>${S.setup ? "" : `<button class="btn grow" data-act="retpl">Add whole templates</button>`}</div>
     <p class="muted small">Or pick one below. Each opens ready to edit, so you can change the name, target and schedule.</p>
     ${Object.entries(LIB).map(([cat,list]) => `<div class="card"><h2>${cat}</h2><div class="chips">${list.map(p=>`<button class="chip ${have.has(p.name)?"added":""}" data-act="lib" data-v="${esc(p.name)}">${esc(p.name)}</button>`).join("")}</div></div>`).join("")}`;
 }
@@ -662,7 +725,7 @@ function vInsights(){
 /* ---------- habits list ---------- */
 function vHabits(){
   const act = habits(), arch = allHabits().filter(h=>h.archived);
-  let html = `<div class="top"><div><div class="eyebrow">Make it yours</div><h1>Habits</h1></div><button class="btn sm primary" data-act="h-add">Add habit</button></div>
+  let html = `<div class="top"><div><div class="eyebrow">Make it yours</div><h1>Habits</h1></div><div class="row" style="gap:6px;justify-content:flex-end"><button class="btn sm" data-act="retpl">Add templates</button><button class="btn sm primary" data-act="h-add">Add habit</button></div></div>
     <p class="muted small">Change targets right here. Edit opens everything else: name, schedule, units, timers, colour, time of day.</p>`;
   if (!act.length) html += `<div class="card"><h2>No habits yet</h2><p class="muted">Add one from the library, or load a template from Settings.</p></div>`;
   act.forEach((h,i) => { html += `<div class="card" style="--hc:${col(h)}"><div class="row between" style="flex-wrap:nowrap"><div class="row" style="gap:8px;min-width:0;flex-wrap:nowrap"><span class="dot"></span><button class="link" style="font-size:17px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" data-act="detail" data-h="${h.id}">${esc(h.name)}</button></div>
@@ -676,10 +739,12 @@ function vHabits(){
 function vSettings(){
   const c = S.cfg, e = c.earn || {}, tr = c.track || {}, dark = getComputedStyle(document.documentElement).colorScheme.includes("dark") ? 1 : 0;
   let html = `<div class="top"><div><div class="eyebrow">Your rules</div><h1>Settings</h1></div></div>`;
-  if (S.mode === "local") html += `<div class="banner warn"><h3>Saved on this device only</h3><div class="small">Your data lives in this browser. It won't follow you to another device, and clearing site data removes it.</div></div>`;
+  if (S.mode === "local" && !S.signedIn) html += `<div class="banner warn"><h3>Saved on this device only</h3><div class="small">Your data lives in this browser. It won't follow you to another device, and clearing site data removes it.</div></div>`;
+  html += accountCard();
   html += `<div class="card"><h2>Theme</h2><div class="row" style="gap:14px">${Object.entries(SKINS).map(([id,s])=>`<button class="skin" data-act="skin" data-v="${id}" aria-pressed="${(c.skin||"ocean")===id}"><i style="background:${s.a[dark]}"></i>${s.n}</button>`).join("")}</div>
     ${S.standalone ? `<div class="f">Light or dark${seg("theme", [["auto","Match phone"],["light","Light"],["dark","Dark"]], c.theme || "auto")}</div>` : `<p class="note">Light and dark follow your Claude appearance setting.</p>`}</div>`;
   html += `<div class="card"><h2>Your why</h2><label class="f">One or two lines in your own words. Shown when you miss a day.<textarea id="why" placeholder="Why does this matter to you?">${esc(c.why)}</textarea></label></div>`;
+  html += `<div class="card"><h2>Coach tone</h2>${seg("tone", [["blunt","Blunt"],["gentle","Gentle"]], c.tone === "gentle" ? "gentle" : "blunt")}<p class="note">Changes how the app talks to you when you miss a day.</p></div>`;
   html += `<div class="card"><h2>Today screen</h2>${tick("set", c.group !== false, "Group habits by time of day", "Morning, afternoon, evening", 'data-v="group"')}${tick("set", c.hideDone, "Hide finished habits", "Done and skipped habits drop off the list", 'data-v="hideDone"')}</div>`;
   html += `<div class="card"><h2>How days and weeks count</h2><div class="f">Week starts on${seg("ws", [["mon","Monday"],["sun","Sunday"]], c.ws || "mon")}</div>
     <label class="f">A new day starts at<select id="roll">${[0,1,2,3,4,5].map(n=>`<option value="${n}" ${(+c.roll||0)===n?"selected":""}>${n===0?"Midnight":n+" am"}</option>`).join("")}</select></label><p class="note">Set this later if you're often up past midnight, so late-night logging counts for the day before.</p>
@@ -696,7 +761,7 @@ function vSettings(){
     <div class="row"><button class="btn sm" data-act="export">Export a backup</button><button class="btn sm" data-act="csv">Export CSV</button><label class="btn sm" style="cursor:pointer">Import a backup<input type="file" id="importFile" accept="application/json,.json" hidden></label></div>
     <p class="note">Importing replaces everything on this device.</p></div>`;
   html += `<div class="card"><h2>Install on your phone</h2><ul class="lines small"><li><b>iPhone:</b> open this page in Safari, tap Share, then "Add to Home Screen".</li><li><b>Android:</b> open it in Chrome, tap the menu, then "Install app" or "Add to Home screen".</li></ul><p class="note">Once installed it opens full screen and works offline.</p></div>`;
-  html += `<div class="card"><h2>Start again from a template</h2><p class="note">Replaces your habits with a new set you can edit first. Logged days are kept.</p><button class="btn sm" data-act="retpl">Choose a template</button></div>`;
+  html += `<div class="card"><h2>Templates</h2><p class="note">Add one or more templates to the habits you have, or replace your list with a new set. Logged days are kept either way.</p><button class="btn sm" data-act="retpl">Browse templates</button></div>`;
   return html;
 }
 
@@ -711,23 +776,38 @@ const TABS = [
 let pending = false, lastView = "";
 function render(){
   const ae = document.activeElement;
-  if (ae && ae.closest && ae.closest("#app") && ae.matches("input[type=text],input[type=number],input[type=date],textarea")) { pending = true; return; }
+  if (ae && ae.closest && ae.closest("#app") && ae.matches("input[type=text],input[type=number],input[type=date],input[type=time],input[type=email],textarea")) { pending = true; return; }
   pending = false; S.memo = {};
   const app = document.getElementById("app"), bar = document.getElementById("tabbar");
   if (S.mode === "loading") { if (S.slow) app.innerHTML = `<div class="card"><div class="eyebrow">Still loading</div><h2>Can't reach your data yet</h2><p class="muted small">This page keeps trying. Check your connection.</p></div>`; return; }
   applySkin();
   const dh = S.detail ? hab(S.detail) : null;
-  const view = S.adding ? "add" : S.setup ? "setup" : (!S.cfg || S.onboarding) ? "onboard" : dh ? "detail:"+dh.id+(S.edit?":e":"") : S.tab;
+  const view = S.adding ? "add" : (S.onboarding || (!S.cfg && !S.setup)) ? "onboard" : S.setup ? "setup" : dh ? "detail:"+dh.id+(S.edit?":e":"") : S.tab;
+  if (view === "onboard" && !S.ob && !S.cfg && !S.setup && !S.gallery) S.ob = newOb();
+  const vkey = view === "onboard" && S.ob ? "swipe:" + S.ob.step : view;
   bar.hidden = view === "onboard" || view === "setup" || view === "add";
   document.getElementById("tabs").innerHTML = TABS.map(t=>`<button data-tab="${t.id}" ${S.tab===t.id&&!dh?'aria-current="page"':""}><svg viewBox="0 0 24 24" aria-hidden="true">${t.icon}</svg>${t.label}</button>`).join("");
   const y = window.scrollY;
-  app.innerHTML = view === "add" ? vAdd() : view === "setup" ? vSetup() : view === "onboard" ? vOnboard() : dh ? vDetail(dh) : ({today:vToday, goals:vGoals, insights:vInsights, habits:vHabits, settings:vSettings}[S.tab] || vToday)();
-  window.scrollTo(0, view === lastView ? y : 0); lastView = view;
+  app.innerHTML = view === "add" ? vAdd() : view === "setup" ? vSetup() : view === "onboard" ? (S.ob ? vSwipe() : vOnboard()) : dh ? vDetail(dh) : ({today:vToday, goals:vGoals, insights:vInsights, habits:vHabits, settings:vSettings}[S.tab] || vToday)();
+  window.scrollTo(0, vkey === lastView ? y : 0); lastView = vkey;
   const t = getTimer(), el = document.getElementById("timerDisplay"); if (t && el) { const left = Math.max(0, t.dur*60 - Math.floor((Date.now()-t.start)/1000)); el.textContent = `${pad(Math.floor(left/60))}:${pad(left%60)}`; }
 }
 document.addEventListener("focusout", () => setTimeout(() => { if (pending) render(); }, 0));
 const go = tab => { S.tab = tab; S.detail = null; S.edit = false; try { localStorage.setItem("nt_tab", tab); } catch(e){} render(); };
 document.getElementById("tabs").addEventListener("click", e => { const b = e.target.closest("[data-tab]"); if (b) go(b.dataset.tab); });
+
+/* ---------- swipe gestures ---------- */
+let drag = null;
+const appEl = document.getElementById("app");
+appEl.addEventListener("pointerdown", e => { const c = e.target.closest("#swipeCard"); if (!c || (e.button !== undefined && e.button > 0)) return; drag = {x:e.clientX, y:e.clientY, dx:0, el:c, id:e.pointerId, locked:false}; c.classList.remove("fly"); });
+appEl.addEventListener("pointermove", e => { if (!drag || e.pointerId !== drag.id) return; const dx = e.clientX - drag.x, dy = e.clientY - drag.y;
+  if (!drag.locked) { if (Math.abs(dx) < 8) return; if (Math.abs(dy) > Math.abs(dx)) { drag = null; return; } drag.locked = true; try { drag.el.setPointerCapture(e.pointerId); } catch(_){} }
+  drag.dx = dx; drag.el.style.transform = `translateX(${dx}px) rotate(${dx/20}deg)`;
+  drag.el.querySelector(".stamp.y").style.opacity = Math.max(0, Math.min(1, dx/70)); drag.el.querySelector(".stamp.n").style.opacity = Math.max(0, Math.min(1, -dx/70)); });
+const endDrag = e => { if (!drag || (e.pointerId !== undefined && e.pointerId !== drag.id)) return; const d = drag; drag = null; if (!d.locked) return;
+  if (Math.abs(d.dx) > 80) obFly(d.dx > 0 ? 1 : -1); else { d.el.classList.add("fly"); d.el.style.transform = ""; d.el.querySelectorAll(".stamp").forEach(x => x.style.opacity = 0); } };
+appEl.addEventListener("pointerup", endDrag); appEl.addEventListener("pointercancel", endDrag);
+document.addEventListener("keydown", e => { if (!S.ob || S.ob.step === "pace" || !document.getElementById("swipeCard") || e.target.matches("input,textarea,select")) return; if (e.key === "ArrowRight") obFly(1); else if (e.key === "ArrowLeft") obFly(-1); });
 
 /* ---------- events ---------- */
 const findH = (id, where) => where === "setup" ? S.setup?.habits.find(h=>h.id===id) : hab(id);
@@ -738,15 +818,31 @@ document.getElementById("app").addEventListener("click", e => {
   const h = b.dataset.h ? (a.startsWith("setup") ? findH(b.dataset.h,"setup") : hab(b.dataset.h)) : null;
   if (a !== "h-del" && a !== "g-del") S.confirm = null;
   switch (a) {
-    case "tpl": { const hs = tplHabits(v); S.setup = {tpl:v, habits:hs, on:Object.fromEntries(hs.map(x=>[x.id,true]))}; S.onboarding = false; render(); break; }
-    case "tpl-cancel": S.onboarding = false; render(); break;
-    case "retpl": S.onboarding = true; render(); break;
-    case "setup-back": S.setup = null; S.onboarding = true; render(); break;
+    case "sw-yes": obFly(1); break;
+    case "sw-no": obFly(-1); break;
+    case "sw-back": { const ob = S.ob; if (ob.step === "pace") { ob.step = "areas"; ob.i = Math.max(0, AREAS.length-1); } else if (ob.step === "habits") { if (ob.hi > 0) ob.hi--; else ob.step = "pace"; } else if (ob.i > 0) ob.i--; render(); break; }
+    case "sw-pace": S.ob.pace = v; obBuild(); if (!S.ob.deck.length) obFinish(); render(); break;
+    case "sw-skip": obFinish(); render(); break;
+    case "sw-gallery": S.ob = null; S.gallery = true; S.pick = {}; render(); break;
+    case "sw-start": S.gallery = false; S.ob = newOb(); render(); break;
+    case "tone": c.tone = v; saveCfg(); break;
+    case "tpl-toggle": S.pick = {...(S.pick||{}), [v]: !(S.pick||{})[v]}; render(); break;
+    case "tpl-next": case "tpl-blank": { const su = S.setup || {tpls:[], habits:[], on:{}, mode: c && habits().length ? "add" : "replace"};
+      if (a === "tpl-blank") su.tpls.push("blank");
+      else Object.keys(S.pick||{}).filter(x=>S.pick[x]).forEach(id => { su.tpls.push(id); tplHabits(id).forEach(x => { if (!su.habits.some(y=>y.name===x.name)) { su.habits.push(x); su.on[x.id] = true; } }); });
+      S.setup = su; S.pick = {}; S.onboarding = false; S.ob = null; S.gallery = false; render(); break; }
+    case "tpl-cancel": S.onboarding = false; S.pick = {}; S.ob = null; S.gallery = false; render(); break;
+    case "retpl": S.adding = false; S.onboarding = true; S.pick = {}; S.ob = S.setup ? null : newOb(); render(); break;
+    case "setup-more": S.onboarding = true; S.pick = {}; S.ob = null; render(); break;
+    case "setup-cancel": S.setup = null; S.onboarding = false; render(); break;
+    case "setup-mode": S.setup.mode = v; render(); break;
     case "setup-on": S.setup.on[h.id] = !S.setup.on[h.id]; render(); break;
     case "setup-sch": setSch(h, v); render(); break;
     case "setup-add": S.adding = true; render(); break;
-    case "setup-go": { const hs = S.setup.habits.filter(x=>S.setup.on[x.id]); let r = 0; hs.forEach(x => { x.ring = x.ring && ++r <= 3; });
-      S.cfg = c ? {...c, habits:[...allHabits().filter(x=>x.archived), ...hs]} : newCfg(hs); S.setup = null; S.onboarding = false; S.tab = hs.length ? "today" : "habits"; S.detail = null; saveCfg(); break; }
+    case "setup-go": { const su = S.setup, addMode = !!(c && habits().length) && su.mode === "add", have = new Set(habits().map(x=>x.name));
+      const hs = su.habits.filter(x => su.on[x.id] && !(addMode && have.has(x.name))); let r = addMode ? habits().filter(x=>x.ring).length : 0; hs.forEach(x => { x.ring = !!x.ring && ++r <= 3; });
+      S.cfg = c ? {...c, habits: addMode ? [...c.habits, ...hs] : [...allHabits().filter(x=>x.archived), ...hs]} : newCfg(hs);
+      S.setup = null; S.onboarding = false; S.tab = S.cfg.habits.length ? "today" : "habits"; S.detail = null; saveCfg(); toast(addMode ? `Added ${hs.length} habit${hs.length===1?"":"s"}` : "You're set up"); break; }
     case "h-add": S.adding = true; render(); break;
     case "add-close": S.adding = false; render(); break;
     case "lib": { const src = v ? libFind(v) : {name:"New habit"}, nh = H(src, {color: src.color || PAL[allHabits().length % PAL.length]}); S.adding = false;
@@ -811,7 +907,7 @@ document.getElementById("app").addEventListener("change", e => {
     else if (f === "target") h.target = num(0, 100000, h.target); else if (f === "step") h.step = num(1, 10000, 1);
     else if (f === "presets") { const p = el.value.split(/[,\s]+/).map(Number).filter(x=>x>=1&&x<=600).slice(0,3); h.presets = p.length ? p : [25,10]; }
     else if (f === "sch.k") setSch(h, el.value); else if (f === "sch.n") h.sch.n = Math.round(num(h.sch.k==="interval"?2:1, h.sch.k==="week"?7:h.sch.k==="month"?31:90, h.sch.n));
-    else if (f === "start" && el.value) h.start = el.value; else return;
+    else if (f === "remind") h.remind = el.value || ""; else if (f === "start" && el.value) h.start = el.value; else return;
     return ds.w === "setup" ? render() : saveCfg(); }
   if (!c) return;
   if (el.id === "why") c.why = el.value.trim();
@@ -848,6 +944,138 @@ document.getElementById("app").addEventListener("change", async e => {
     S.tab = "today"; render(); toast("Backup imported");
   } catch(err) { toast("That file isn't a Never Twice backup."); }
 });
+/* ---------- accounts, sync and reminders (hosted version only) ---------- */
+const NC = window.NT_CONFIG || {}, SB = String(NC.supabaseUrl || "").replace(/\/+$/,""), AK = NC.supabaseKey || "", cloud = !!(SB && AK);
+const pushOK = cloud && !!NC.vapidPublicKey && "serviceWorker" in navigator && "PushManager" in window && "Notification" in window;
+const A = {session:LS.get("session"), step:"idle", email:"", msg:"", busy:false, last:LS.get("synced"), push:"off", syncing:false, confirm:false};
+const setCan = () => { S.canRemind = pushOK && !!A.session; };
+function setSession(j){
+  A.session = j && j.access_token ? {access_token:j.access_token, refresh_token:j.refresh_token, expires_at:j.expires_at || Math.floor(Date.now()/1000) + (+j.expires_in || 3600), user:{id:j.user.id, email:j.user.email}} : null;
+  if (A.session) LS.set("session", A.session); else { try { localStorage.removeItem("nt_session"); } catch(e){} }
+  S.signedIn = !!A.session; setCan();
+}
+async function authCall(path, body, bearer, method){
+  const r = await fetch(SB + "/auth/v1" + path, {method:method || "POST", headers:{apikey:AK, "Content-Type":"application/json", ...(bearer ? {Authorization:"Bearer " + bearer} : {})}, body:method === "GET" ? undefined : JSON.stringify(body || {})});
+  let j = null; try { j = await r.json(); } catch(e){}
+  if (!r.ok) throw {status:r.status, msg:(j && (j.msg || j.error_description || j.message)) || ""};
+  return j || {};
+}
+async function token(){
+  const s = A.session; if (!s) throw {code:"signed_out"};
+  if (s.expires_at*1000 - 60000 > Date.now()) return s.access_token;
+  if (!A._ref) A._ref = authCall("/token?grant_type=refresh_token", {refresh_token:s.refresh_token})
+    .then(j => setSession({...j, user:j.user || s.user}), e => { if (e.status === 400 || e.status === 401 || e.status === 403) { setSession(null); A.msg = "You were signed out. Sign in again to keep syncing."; } throw {code:"auth"}; })
+    .finally(() => { A._ref = null; });
+  await A._ref; return A.session.access_token;
+}
+async function rest(path, opt = {}){
+  const t = await token();
+  const r = await fetch(SB + "/rest/v1" + path, {method:opt.method || "GET", headers:{apikey:AK, Authorization:"Bearer " + t, "Content-Type":"application/json", ...(opt.prefer ? {Prefer:opt.prefer} : {})}, body:opt.body ? JSON.stringify(opt.body) : undefined});
+  if (!r.ok) throw {status:r.status};
+  return r.json().catch(() => null);
+}
+const stable = o => JSON.stringify(o, (k,v) => v && typeof v === "object" && !Array.isArray(v) ? Object.keys(v).sort().reduce((a,x) => (a[x] = v[x], a), {}) : v);
+function mergeDoc(id, loc, rem){ // settings: newest wins. Days: each day is merged separately, newest wins.
+  if (!rem) return loc; if (!loc) return rem;
+  if (id === "config") return (+rem.u || 0) > (+loc.u || 0) ? rem : loc;
+  const d = {...(rem.d || {})}; for (const k in (loc.d || {})) { const a = loc.d[k], b = d[k]; if (!b || (+a.u || 0) >= (+b.u || 0)) d[k] = a; }
+  return {...rem, ...loc, d};
+}
+async function syncAll(preferRemote){
+  if (!cloud || !A.session || A.syncing) return; A.syncing = true;
+  try {
+    const rows = await rest("/nt_docs?select=id,data"), remote = Object.fromEntries((rows || []).map(r => [r.id, r.data]));
+    const ids = new Set(Object.keys(remote)); if (S.cfg) ids.add("config"); Object.keys(S.months).forEach(ym => ids.add("m-" + ym));
+    const ups = []; let changed = false;
+    ids.forEach(id => { const loc = id === "config" ? S.cfg : S.months[id.slice(2)], rem = remote[id];
+      const m = id === "config" && preferRemote !== undefined && loc && rem ? (preferRemote ? rem : {...loc, u:Date.now()}) : mergeDoc(id, loc, rem);
+      if (!m) return;
+      if (stable(m) !== stable(rem)) ups.push({user_id:A.session.user.id, id, data:m});
+      if (stable(m) !== stable(loc)) { changed = true; if (id === "config") S.cfg = fixCfg(clone(m)); else S.months[id.slice(2)] = clone(m); LS.set(id, m); } });
+    if (ups.length) await rest("/nt_docs?on_conflict=user_id,id", {method:"POST", prefer:"resolution=merge-duplicates,return=minimal", body:ups});
+    A.last = Date.now(); LS.set("synced", A.last); A.msg = "";
+    if (changed) { S.detail = hab(S.detail) ? S.detail : null; }
+  } catch(e) { if (e.code !== "auth" && e.code !== "signed_out") A.msg = "Couldn't sync just now. It will try again."; }
+  finally { A.syncing = false; render(); }
+}
+S.afterWrite = () => { if (!A.session) return; clearTimeout(A._t); A._t = setTimeout(() => syncAll(), 2000); };
+document.addEventListener("visibilitychange", () => { if (document.visibilityState === "visible") syncAll(); });
+
+/* reminders */
+const b64u = s => { const p = "=".repeat((4 - s.length % 4) % 4), raw = atob((s + p).replace(/-/g,"+").replace(/_/g,"/")); return Uint8Array.from(raw, c => c.charCodeAt(0)); };
+const tz = () => { try { return Intl.DateTimeFormat().resolvedOptions().timeZone || "UTC"; } catch(e) { return "UTC"; } };
+async function getSub(){ if (!pushOK) return null; const reg = await navigator.serviceWorker.getRegistration(); return reg ? reg.pushManager.getSubscription() : null; }
+async function savePush(sub){ const j = sub.toJSON(); await rest("/nt_push?on_conflict=endpoint", {method:"POST", prefer:"resolution=merge-duplicates,return=minimal", body:{user_id:A.session.user.id, endpoint:j.endpoint, p256dh:j.keys.p256dh, auth:j.keys.auth, tz:tz(), updated_at:new Date().toISOString()}}); }
+async function pushCheck(){ try { const sub = await getSub(); A.push = sub ? "on" : (pushOK && Notification.permission === "denied" ? "blocked" : "off"); if (sub && A.session) await savePush(sub); } catch(e){} }
+async function pushOn(){
+  const perm = await Notification.requestPermission(); if (perm !== "granted") { A.push = perm === "denied" ? "blocked" : "off"; return; }
+  const reg = await navigator.serviceWorker.ready, sub = await reg.pushManager.subscribe({userVisibleOnly:true, applicationServerKey:b64u(NC.vapidPublicKey)});
+  await savePush(sub); A.push = "on";
+  try { await reg.showNotification("Never Twice", {body:"Reminders are on for this device.", icon:"./icons/icon-192.png", tag:"nt-on"}); } catch(e){}
+}
+async function pushOff(){ const sub = await getSub(); if (!sub) { A.push = "off"; return; } const ep = sub.endpoint; try { await sub.unsubscribe(); } catch(e){}
+  try { await rest("/nt_push?endpoint=eq." + encodeURIComponent(ep), {method:"DELETE"}); } catch(e){} A.push = "off"; }
+
+/* account card in Settings */
+function accountCard(){
+  const c = S.cfg, s = A.session, msg = A.msg ? `<p class="note" style="color:var(--bad)">${esc(A.msg)}</p>` : "", dis = A.busy ? "disabled" : "";
+  if (!cloud) return `<div class="card"><h2>Account and sync</h2><p class="note">Sync and reminders aren't switched on for this copy of the app. Everything is saved on this device.</p></div>`;
+  if (!s) return `<div class="card"><h2>Account and sync</h2><p class="small muted">Sign in to keep your habits on all your devices and to get reminders. It's optional. Without an account, everything stays on this device.</p>
+    ${A.step === "code" ? `<p class="small">We emailed a 6-digit code to <b>${esc(A.email)}</b>. It can take a minute. Check your spam folder too.</p>
+      <label class="f">Code<input type="text" id="accCode" inputmode="numeric" autocomplete="one-time-code" maxlength="10" placeholder="123456"></label>
+      <div class="row"><button class="btn primary" data-acc="verify" ${dis}>Sign in</button><button class="btn" data-acc="reset" ${dis}>Use a different email</button></div>`
+    : `<label class="f">Email<input type="email" id="accEmail" autocomplete="email" value="${esc(A.email)}" placeholder="you@example.com"></label>
+      <button class="btn primary" data-acc="send" ${dis}>Email me a sign-in code</button>`}${msg}</div>`;
+  if (A.step === "choose") return `<div class="card"><h2>Which habits do you want to keep?</h2><p class="small muted">Your account already has habits saved, and this device has its own. Logged days from both are kept either way.</p>
+    <button class="btn primary" data-acc="use-remote" ${dis}>Use the habits from my account</button><button class="btn" data-acc="use-local" ${dis}>Keep this device's habits</button>${msg}</div>`;
+  const last = A.last ? new Date(A.last).toLocaleString("en-GB", {day:"numeric", month:"short", hour:"2-digit", minute:"2-digit"}) : "not yet";
+  let rem;
+  if (!NC.vapidPublicKey) rem = `<p class="note">Reminders aren't switched on for this copy of the app.</p>`;
+  else if (!pushOK) rem = `<p class="note">This browser can't show notifications here. On an iPhone, add the app to your Home Screen first and open it from there.</p>`;
+  else rem = `${A.push === "blocked" ? `<p class="note" style="color:var(--bad)">Notifications are blocked for this site. Allow them in your browser or phone settings, then come back.</p>` : `<button class="btn ${A.push === "on" ? "" : "primary"}" data-acc="${A.push === "on" ? "push-off" : "push-on"}" ${dis}>${A.push === "on" ? "Turn off reminders on this device" : "Turn on reminders on this device"}</button>`}
+    <label class="f">Daily summary of what's still due (optional)<input type="time" id="sumTime" value="${esc(c.summary || "")}"></label>
+    <p class="note">Each habit can also have its own reminder time. Open a habit, tap Edit habit, and set "Reminder time". Reminders check every five minutes, so they can arrive a few minutes late.</p>`;
+  return `<div class="card"><div class="row between"><h2>Account and sync</h2><span class="pill good">Signed in</span></div>
+    <div class="small"><b>${esc(s.user.email)}</b><br><span class="muted">Last synced: ${last}${A.syncing ? " · syncing…" : ""}</span></div>
+    <div class="row"><button class="btn sm" data-acc="sync" ${dis}>Sync now</button><button class="btn sm" data-acc="signout" ${dis}>Sign out</button></div>${msg}
+    <h2>Reminders</h2>${rem}
+    <details><summary>Delete my cloud data</summary><p class="note" style="margin-top:8px">Removes everything stored in your account and signs you out. The copy on this device stays.</p><button class="btn sm danger" data-acc="wipe" ${dis}>${A.confirm ? "Tap again to delete" : "Delete cloud data"}</button></details></div>`;
+}
+async function afterSignIn(){
+  A.step = "idle"; A.msg = ""; let has = false;
+  try { has = ((await rest("/nt_docs?select=id&id=eq.config")) || []).length > 0; } catch(e){}
+  if (has && S.cfg && habits().length) { A.step = "choose"; render(); return; }
+  await syncAll(has ? true : undefined); pushCheck().then(render);
+}
+document.getElementById("app").addEventListener("click", async e => {
+  const b = e.target.closest("[data-acc]"); if (!b || A.busy) return; const act = b.dataset.acc;
+  if (act !== "wipe") A.confirm = false; A.busy = true; A.msg = "";
+  try {
+    if (act === "send") { const em = (document.getElementById("accEmail")?.value || "").trim().toLowerCase();
+      if (!/^\S+@\S+\.\S+$/.test(em)) A.msg = "Enter a valid email address."; else { A.email = em; await authCall("/otp", {email:em, create_user:true}); A.step = "code"; } }
+    else if (act === "verify") { const code = (document.getElementById("accCode")?.value || "").replace(/\s/g,"");
+      if (!code) A.msg = "Enter the code from the email."; else { setSession(await authCall("/verify", {type:"email", email:A.email, token:code})); A.busy = false; await afterSignIn(); toast("Signed in"); } }
+    else if (act === "reset") { A.step = "idle"; }
+    else if (act === "use-remote" || act === "use-local") { A.step = "idle"; await syncAll(act === "use-remote"); pushCheck().then(render); }
+    else if (act === "sync") { await syncAll(); if (!A.msg) toast("Synced"); }
+    else if (act === "push-on") { await pushOn(); }
+    else if (act === "push-off") { await pushOff(); }
+    else if (act === "signout") { try { await pushOff(); } catch(e){} try { await authCall("/logout", {}, A.session.access_token); } catch(e){} setSession(null); A.step = "idle"; toast("Signed out. Your data is still on this device."); }
+    else if (act === "wipe") { if (!A.confirm) A.confirm = true; else { A.confirm = false; const id = A.session.user.id; try { await pushOff(); } catch(e){}
+      await rest("/nt_docs?user_id=eq." + id, {method:"DELETE"}); await rest("/nt_push?user_id=eq." + id, {method:"DELETE"});
+      try { await authCall("/logout", {}, A.session.access_token); } catch(e){} setSession(null); toast("Cloud data deleted"); } }
+  } catch(err) {
+    A.msg = err.status === 429 ? "Too many tries. Wait a minute, then try again." : act === "verify" ? "That code didn't work. Check it, or ask for a new one." : act === "send" ? (err.msg || "Couldn't send the code. Check the address and try again.") : act.startsWith("push") ? "Couldn't change reminders on this device." : "That didn't work. Check your connection and try again.";
+  } finally { A.busy = false; render(); }
+});
+document.getElementById("app").addEventListener("change", e => { if (e.target.id === "sumTime" && S.cfg) { S.cfg.summary = e.target.value || ""; saveCfg(); } });
+(async () => { // start-up: finish a sign-in link if one was used, then sync
+  S.signedIn = !!A.session; setCan(); if (!cloud) return;
+  if (location.hash.includes("access_token=")) { const q = new URLSearchParams(location.hash.slice(1));
+    try { const user = await authCall("/user", null, q.get("access_token"), "GET"); setSession({access_token:q.get("access_token"), refresh_token:q.get("refresh_token"), expires_in:q.get("expires_in"), user}); history.replaceState(null, "", location.pathname + location.search); await afterSignIn(); } catch(e){} }
+  else if (A.session) { await syncAll(); await pushCheck(); render(); }
+})();
+
 if ("serviceWorker" in navigator) window.addEventListener("load", () => navigator.serviceWorker.register("./sw.js").catch(() => {}));
 boot();
 })();
