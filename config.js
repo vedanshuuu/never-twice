@@ -4,6 +4,6 @@
 // These three values are safe to publish. Never put a secret key or the VAPID private key in this file.
 window.NT_CONFIG = {
   supabaseUrl: "",       // e.g. "https://abcdefghijkl.supabase.co"
-  supabaseKey: "",       // your publishable key, starts with "sb_publishable_"
+  supabaseKey: "sb_publishable_k7Xk4ZI6IJkJOZIQwDxlNA_G0l2Hw0n",       // your publishable key, starts with "sb_publishable_"
   vapidPublicKey: ""     // the public key from vapid-keys.html
 };

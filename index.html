@@ -106,7 +106,7 @@ button{font:inherit;color:inherit;cursor:pointer}
 .dot{width:10px;height:10px;border-radius:50%;background:var(--hc);flex:none}
 .bar{height:8px;border-radius:99px;background:var(--sunk);overflow:hidden}
 .bar>i{display:block;height:100%;background:var(--hc,var(--accent));border-radius:99px;max-width:100%}
-input[type=text],input[type=number],input[type=date],input[type=time],input[type=email],textarea,select{font:inherit;color:var(--ink);background:var(--sunk);border:1px solid transparent;border-radius:10px;padding:9px 11px;width:100%;min-width:0}
+input[type=text],input[type=number],input[type=date],input[type=time],input[type=email],input[type=password],textarea,select{font:inherit;color:var(--ink);background:var(--sunk);border:1px solid transparent;border-radius:10px;padding:9px 11px;width:100%;min-width:0}
 .ins input{background:var(--surface)} .ins .tick{background:var(--surface)}
 input:focus,textarea:focus,select:focus{border-color:var(--accent);outline:none}
 textarea{resize:vertical;min-height:70px}
@@ -119,7 +119,7 @@ label.f,.f{display:flex;flex-direction:column;gap:5px;font-size:13px;color:var(-
 .why{border-left:3px solid var(--accent);padding:4px 0 4px 12px;font-family:var(--f-display);font-size:16px;font-weight:500}
 .rings{display:grid;grid-template-columns:132px 1fr;gap:16px;align-items:center}
 .legend{display:flex;flex-direction:column;gap:8px;min-width:0}
-.legend .k{font-size:12px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;overflow-wrap:anywhere}
+.legend .k{font-size:12px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .legend .v{font-family:var(--f-mono);font-size:15px}
 .big{font-family:var(--f-display);font-size:40px;font-weight:700;line-height:1;letter-spacing:-.02em}
 .timer{font-family:var(--f-mono);font-size:40px;font-weight:500;letter-spacing:-.02em;color:var(--hc,var(--accent))}
@@ -143,8 +143,28 @@ label.f,.f{display:flex;flex-direction:column;gap:5px;font-size:13px;color:var(-
 .tpl .ck{width:22px;height:22px;border-radius:50%;border:2px solid var(--ink-3);flex:none;display:grid;place-items:center}
 .tpl[aria-pressed="true"] .ck{background:var(--accent);border-color:var(--accent)}
 .tpl[aria-pressed="true"] .ck::after{content:"";width:5px;height:10px;border:solid var(--on-accent);border-width:0 2.5px 2.5px 0;transform:rotate(45deg) translate(-1px,-1px)}
-.deck{position:relative;height:330px;touch-action:pan-y}
-.scard{position:absolute;inset:0;background:var(--surface);border:1px solid var(--line);border-radius:26px;padding:56px 22px 22px;display:flex;flex-direction:column;gap:10px;box-shadow:0 10px 30px rgba(18,23,34,.10);user-select:none;-webkit-user-select:none;touch-action:pan-y;cursor:grab;overflow:hidden}
+.deck{position:relative;height:360px;touch-action:pan-y}
+.ico{display:inline-grid;place-items:center;font-size:1.05em;line-height:1;flex:none}
+.bigico{font-size:44px;line-height:1}
+.pchips{display:flex;flex-wrap:wrap;gap:6px}
+.pchip{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:6px 10px;font-size:13px;font-weight:600;color:var(--ink)}
+.pchip[aria-pressed="false"]{opacity:.45;text-decoration:line-through;background:var(--sunk)}
+.cust{display:flex;flex-direction:column;gap:8px;margin-top:auto;padding-top:10px;border-top:1px solid var(--line)}
+.cust .lbl{font-size:12px;color:var(--ink-3);font-weight:600}
+.stp{display:flex;align-items:center;gap:8px}
+.stp .btn{min-width:38px;height:38px;padding:0 8px}
+.stp .num{min-width:64px;text-align:center;font-size:15px}
+.icogrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(40px,1fr));gap:6px}
+.icogrid button{height:40px;border-radius:10px;border:1px solid var(--line);background:var(--surface);font-size:20px;padding:0}
+.icogrid button[aria-pressed="true"]{border:2px solid var(--accent);background:var(--sunk)}
+.tplcard{display:flex;flex-direction:column;gap:10px;border:1px solid var(--line);background:var(--surface);border-radius:var(--r);padding:14px;box-shadow:var(--shadow)}
+.tplcard.on{border-color:var(--accent);box-shadow:inset 0 0 0 1.5px var(--accent)}
+.tplcard .tphead{display:flex;align-items:center;gap:12px;border:0;background:none;padding:0;text-align:left;width:100%}
+.tplcard .tphead b{font-family:var(--f-display);font-size:17px;flex:1}
+.tplcard .ck{width:24px;height:24px;border-radius:50%;border:2px solid var(--ink-3);flex:none;display:grid;place-items:center}
+.tplcard.on .ck{background:var(--accent);border-color:var(--accent)}
+.tplcard.on .ck::after{content:"";width:5px;height:10px;border:solid var(--on-accent);border-width:0 2.5px 2.5px 0;transform:rotate(45deg) translate(-1px,-1px)}
+.scard{position:absolute;inset:0;background:var(--surface);border:1px solid var(--line);border-radius:26px;padding:48px 20px 18px;overflow:auto;display:flex;flex-direction:column;gap:10px;box-shadow:0 10px 30px rgba(18,23,34,.10);user-select:none;-webkit-user-select:none;touch-action:pan-y;cursor:grab;overflow:hidden}
 .scard.back{transform:scale(.94) translateY(12px);opacity:.55;pointer-events:none}
 .scard .say{font-family:var(--f-display);font-weight:700;font-size:30px;line-height:1.08;letter-spacing:-.02em;text-wrap:balance}
 .stamp{position:absolute;top:18px;font-family:var(--f-display);font-weight:700;font-size:14px;letter-spacing:.1em;padding:3px 10px;border-radius:8px;border:2px solid;opacity:0}
@@ -183,7 +203,32 @@ ul.lines{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:6px}
 .tabs button{border:0;background:none;padding:10px 0 12px;display:flex;flex-direction:column;align-items:center;gap:3px;font-size:11px;font-weight:600;color:var(--ink-3)}
 .tabs button svg{width:22px;height:22px}
 .tabs button[aria-current="page"]{color:var(--accent)}
-.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(76px + env(safe-area-inset-bottom,0px));background:var(--ink);color:var(--bg);padding:8px 14px;border-radius:999px;font-size:13px;font-weight:600;z-index:30;max-width:90vw}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(76px + env(safe-area-inset-bottom,0px));background:var(--ink);color:var(--bg);padding:8px 8px 8px 14px;border-radius:999px;font-size:13px;font-weight:600;z-index:30;max-width:92vw;display:flex;align-items:center;gap:10px;white-space:nowrap}
+.toast:not(:has(button)){padding-right:14px}
+.toast button{border:0;background:color-mix(in srgb, var(--bg) 18%, transparent);color:var(--bg);border-radius:999px;padding:5px 12px;font-weight:700;font-size:13px}
+.hab.c{gap:0;padding-block:8px}
+.hab .hx{display:flex;flex-direction:column;gap:8px;padding:10px 0 4px;margin-left:56px}
+@media (max-width:400px){.hab .hx{margin-left:0}}
+.hval{font-size:12px}
+.s .dots{display:inline-flex;vertical-align:middle;margin-left:6px}
+.hname .s{display:flex;align-items:center;gap:4px;flex-wrap:wrap}
+@keyframes pop{0%{transform:scale(1)}40%{transform:scale(1.22)}100%{transform:scale(1)}}
+.ringbtn.pop{animation:pop .35s ease}
+.ritual{border:1px solid var(--line);border-radius:var(--r);padding:16px;display:flex;flex-direction:column;gap:12px;background:linear-gradient(160deg,color-mix(in srgb,var(--accent) 12%,var(--surface)),var(--surface) 70%);box-shadow:var(--shadow)}
+.ritual .big{font-size:34px}
+.emo{display:flex;gap:6px}
+.emo button{flex:1;border:1px solid var(--line);background:var(--surface);border-radius:12px;padding:8px 0;font-size:22px;line-height:1}
+.emo button[aria-pressed="true"]{border:2px solid var(--accent);background:var(--sunk)}
+.ovl{position:fixed;inset:0;z-index:50;display:grid;place-items:center;padding:24px;background:color-mix(in srgb,var(--ink) 45%,transparent)}
+.ovl canvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.ovlcard{position:relative;background:var(--surface);border-radius:24px;padding:26px 22px;max-width:340px;width:100%;text-align:center;display:flex;flex-direction:column;gap:10px;align-items:center;box-shadow:0 20px 60px rgba(0,0,0,.3)}
+.ovlcard .em{font-size:56px;line-height:1}
+@media (prefers-reduced-motion:no-preference){.ovlcard{animation:pop .4s ease}}
+.trophies{display:grid;grid-template-columns:repeat(auto-fill,minmax(100px,1fr));gap:10px}
+.trophy{display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center;padding:12px 8px;border-radius:14px;background:var(--sunk);font-size:12px;font-weight:600;min-width:0}
+.trophy .em{font-size:30px;line-height:1}
+.trophy.locked{opacity:.45;filter:grayscale(1)}
+.input-unset{opacity:.45}
 @media (max-width:380px){.rings{grid-template-columns:112px 1fr}.big{font-size:34px}}
 @media (prefers-reduced-motion:no-preference){.ringarc{transition:stroke-dasharray .5s ease}}
 </style>
@@ -239,6 +284,15 @@ const LIB = {
   "Limits":[P("Screen time","time",{target:120,dir:"max",color:"c8",q:"Minutes on your phone today"}), P("Social media","time",{target:30,dir:"max",color:"c7"}), P("Coffee","count",{target:2,unit:"cups",dir:"max",color:"c5"}),
     P("Cigarettes","count",{target:0,unit:"",dir:"max",color:"c2"}), P("Snacks","count",{target:1,unit:"",dir:"max",color:"c5"})],
 };
+const ICONS = {"Drink water":"💧","Sleep 7+ hours":"😴","In bed by 11pm":"🛏️","Take vitamins":"💊","Eat vegetables":"🥦","No added sugar":"🍬","Floss":"🦷","No alcohol":"🍷","Cook at home":"🍳",
+  "Workout":"🏋️","Run":"🏃","Steps":"👟","Stretch":"🙆","Yoga":"🤸","Play a sport":"⚽","Push-ups":"💪","Meditate":"🧘","Journal":"📓","Gratitude list":"🙏","Breathing exercise":"🌬️","Time outdoors":"🌳",
+  "Call family or a friend":"📞","No phone for the first hour":"📵","Study":"📚","Read":"📖","Read pages":"📄","Language practice":"🗣️","Practise an instrument":"🎸","Online course":"🎓","Flashcards":"🗂️",
+  "Deep work":"🎯","Plan the day":"🗓️","Clear inbox":"📥","Side project":"🚀","Job application":"💼","Networking message":"🤝","Tidy up":"🧹","Laundry":"🧺","Track spending":"💶","No-spend day":"🪙",
+  "Weekly review":"🔁","Meal prep":"🥡","Budget check":"📊","Screen time":"📱","Social media":"📲","Coffee":"☕","Cigarettes":"🚬","Snacks":"🍪"};
+const ICON_PICK = ["🎯","✅","🔥","⭐","💪","🏋️","🏃","🚴","🏊","⚽","🏏","🎾","🧘","🙆","👟","💧","🥦","🍎","🍳","🥡","☕","🍷","🍬","🍪","🚬","😴","🛏️","💊","🦷","📚","📖","📓","✍️","🗣️","🎸","🎨","🎓","🗂️","💼","🤝","🚀","💻","📥","🗓️","🧹","🧺","🪴","🌳","☀️","🌬️","🙏","📞","❤️","💶","🪙","📊","📱","📵","🎮","🐶"];
+for (const list of Object.values(LIB)) for (const p of list) if (!p.icon) p.icon = ICONS[p.name] || "🎯";
+const iconOf = h => h.icon || ICONS[h.name] || "🎯";
+const ico = h => `<span class="ico" aria-hidden="true">${esc(iconOf(h))}</span>`;
 const libFind = n => Object.values(LIB).flat().find(p => p.name === n);
 function H(p, o={}){ const type = p.type || "check";
   return norm({id:uid(), name:p.name||"New habit", type, target:type==="time"?30:type==="count"?8:1, unit:"", dir:"min", step:1, sch:{k:"daily"}, tod:"any", color:"c1", ring:false, q:"", desc:"", presets:[25,10], start:key(today()), ...clone(p), ...o}); }
@@ -246,6 +300,7 @@ function norm(h){ // also migrates habits saved by the first version
   if (!h.sch) h.sch = h.type === "check" ? ((h.perWeek||7) >= 7 ? {k:"daily"} : {k:"week",n:h.perWeek}) : ((h.days||ALL).length === 7 ? {k:"daily"} : {k:"days",days:h.days});
   h.start = h.start || h.created || key(new Date()); h.dir = h.dir || "min"; h.tod = h.tod || "any"; h.unit = h.unit || ""; h.step = +h.step || 1;
   if (!Array.isArray(h.presets) || !h.presets.length) h.presets = [25,10]; if (!PAL.includes(h.color)) h.color = "c1";
+  if (!h.icon) h.icon = ICONS[h.name] || "🎯";
   return h; }
 const T = (name, desc, list) => ({name, desc, list});
 const TEMPLATES = {
@@ -355,19 +410,61 @@ function weekDone(h, ws, upTo){ let t = 0; for (let i=0;i<7;i++){ const k = key(
 function expected(h, ws, upTo){ let t = 0, n = 0; for (let i=0;i<7;i++){ const k = key(addDays(ws,i)); if (k > upTo) break; n++; if (fixed(h) && scheduled(h,k) && !skipped(k,h.id)) t += isMax(h) || h.type === "check" ? 1 : tgt(h); } return fixed(h) ? t : weekTarget(h)*n/7; }
 const progress = (h, ws) => { const wt = weekTarget(h); return wt ? weekDone(h,ws)/wt : 0; };
 const dayTarget = (h,k) => k < h.start ? 0 : fixed(h) ? (scheduled(h,k) ? tgt(h) : 0) : tgt(h)*freq(h);
-function weekScore(ws){ const hs = habits(); if (!hs.length) return 0; const tk = key(today());
-  return Math.round(100 * hs.reduce((a,h) => { const e = expected(h,ws,tk); return a + (e > 0 ? Math.min(1, weekDone(h,ws,tk)/e) : 1); }, 0) / hs.length); }
+function expectedFair(h, ws, tk){ // today only counts once it's done, so mornings never look like failure
+  if (!fixed(h)) { const done = weekDone(h,ws,tk), need = weekTarget(h) - done, left = 6 - daysBetween(ws, parse(tk));
+    return need <= left ? done : Math.max(done, weekTarget(h) - left); }
+  const yk = key(addDays(parse(tk),-1)), base = yk < key(ws) ? 0 : expected(h,ws,yk), full = expected(h,ws,tk);
+  return base + ((kept(h,tk) || skipped(tk,h.id)) ? full - base : 0); }
+function weekScore(ws){ const hs = habits(); if (!hs.length) return 0; const tk = key(today()), end = key(addDays(ws,6)), cur = tk >= key(ws) && tk <= end, upTo = cur ? tk : end;
+  const live = hs.filter(h => h.start <= upTo); if (!live.length) return 0;
+  return Math.round(100 * live.reduce((a,h) => { const e = cur ? expectedFair(h,ws,tk) : expected(h,ws,upTo); return a + (e > 0 ? Math.min(1, weekDone(h,ws,upTo)/e) : 1); }, 0) / live.length); }
 const fmtV = (h,v) => h.type === "time" ? (v >= 120 ? h1(v/60)+" h" : Math.round(v)+" min") : `${r1(v)}${unit(h) ? " "+unit(h) : ""}`;
 const wtN = h => Math.max(1, Math.round(weekTarget(h)));
 const weekLabel = (h,ws) => isMax(h) ? `${weekDone(h,ws)}/${wtN(h)} days in limit` : h.type === "check" ? `${weekDone(h,ws)}/${wtN(h)} this week` : `${h.type==="count" ? r1(weekDone(h,ws)) : fmtV(h,weekDone(h,ws))} / ${fmtV(h,weekTarget(h))} this week`;
 function schedLabel(h){ const s = h.sch, t = h.type === "check" ? "" : `${isMax(h)?"at most ":""}${fmtV(h,tgt(h))}, `;
   return t + (s.k === "daily" ? "every day" : s.k === "days" ? (s.days.length === 5 && WK.every(d=>s.days.includes(d)) ? "weekdays" : s.days.map(d=>DOW[d]).join(" ")) : s.k === "week" ? `${s.n}× a week` : s.k === "month" ? `${s.n}× a month` : `every ${s.n} days`); }
 
+function shieldState(){ if (S.memo.sh) return S.memo.sh; const c = S.cfg, out = {have:0, set:new Set(), earned:0, used:0};
+  if (!c || c.shields === false) return S.memo.sh = out;
+  const t = today(), tk = key(t), start = c.shieldStart || tk, hs = habits().filter(fixed), last = {};
+  const prevKept = (h, k) => { for (let i=1;i<15;i++){ const x = key(addDays(parse(k),-i)); if (x < h.start) return false; if (scheduled(h,x) && !skipped(x,h.id)) return kept(h,x); } return false; };
+  for (let d = parse(start); key(d) < tk; d = addDays(d,1)) { const k = key(d);
+    for (const h of hs) { if (!scheduled(h,k) || skipped(k,h.id)) continue; if (last[h.id] === undefined) last[h.id] = prevKept(h,k);
+      if (kept(h,k)) { last[h.id] = true; continue; }
+      if (last[h.id] && out.have > 0) { out.have--; out.used++; out.set.add(k+"|"+h.id); } else last[h.id] = false; }
+    if (dowIdx(d) === (wsI()+6)%7) { const ws = weekOf(d); if (key(ws) >= start && habits().some(h => h.start <= key(ws)) && weekScore(ws) >= 100) { out.earned++; if (out.have < 2) out.have++; } } }
+  return S.memo.sh = out; }
+const shielded = (h,k) => shieldState().set.has(k+"|"+h.id);
+function mustToday(h,k){ // flexible habits only count for a perfect day once they can't be put off any longer
+  if (k < h.start) return false; if (fixed(h)) return scheduled(h,k); if (!dueOn(h,k)) return false; if (kept(h,k) || skipped(k,h.id)) return true;
+  const d = parse(k), s = h.sch;
+  if (s.k === "week") { const ws = weekOf(d); return s.n - countKept(h, ws, addDays(d,-1)) >= 7 - daysBetween(ws,d); }
+  if (s.k === "month") { const end = new Date(d.getFullYear(), d.getMonth()+1, 0); return s.n - countKept(h, monthStart(d), addDays(d,-1)) >= daysBetween(d,end) + 1; }
+  return true; }
+function dayStatus(k){ const m = S.memo.ds || (S.memo.ds = {}); if (k in m) return m[k];
+  const due = habits().filter(h => mustToday(h,k)); return m[k] = due.length ? due.every(h => kept(h,k) || skipped(k,h.id)) : null; }
+function perfectRun(){ const t = today(); let n = 0, d = dayStatus(key(t)) ? t : addDays(t,-1);
+  for (let i=0;i<400;i++, d = addDays(d,-1)) { const st = dayStatus(key(d)); if (st === null) { if (key(d) < (habits().reduce((a,h)=>h.start<a?h.start:a, "9999"))) break; continue; } if (st) n++; else break; } return n; }
+function perfectWeeks(){ const tk = key(today()), hs = habits(); if (!hs.length) return 0; const first = hs.reduce((a,h)=>h.start<a?h.start:a, tk); let n = 0;
+  for (let ws = weekOf(parse(first)); key(addDays(ws,6)) < tk; ws = addDays(ws,7)) if (weekScore(ws) >= 100) n++; return n; }
+function badges(){ if (S.memo.bd) return S.memo.bd; const out = [], tk = key(today()), hs = habits();
+  const add = (id, icon, title, desc, have, need) => out.push({id, icon, title, desc, got: have >= need, have: Math.min(have, need), need});
+  const first = hs.reduce((a,h)=>h.start<a?h.start:a, tk); let pd = 0;
+  for (let d = parse(first); key(d) <= tk; d = addDays(d,1)) if (dayStatus(key(d))) pd++;
+  let ci = 0; Object.values(S.months).forEach(m => Object.entries(m.d||{}).forEach(([k,d]) => { for (const id in (d.h||{})) { const h = hab(id); if (h && kept(h,k)) ci++; } }));
+  const pw = perfectWeeks();
+  add("pd1","🌟","First perfect day","Everything due in one day, done", pd, 1); add("pd7","✨","7 perfect days","Seven complete days", pd, 7); add("pd30","💫","30 perfect days","A month of complete days", pd, 30);
+  add("pw1","🗓️","First perfect week","Every habit on target for a week", pw, 1); add("pw4","🏅","4 perfect weeks","Four weeks fully on target", pw, 4);
+  [[10,"✅"],[50,"🎯"],[100,"💯"],[500,"🏆"]].forEach(([n,i]) => add("ci"+n, i, `${n} check-ins`, `Kept a habit ${n} times`, ci, n));
+  hs.forEach(h => { const st = streaks(h), wk = st.unit !== "d", steps = wk ? [4,12,26] : [7,21,50,100];
+    steps.forEach((n,i) => add(`st-${h.id}-${n}`, ["🔥","⚡","🚀","👑"][i], `${iconOf(h)} ${h.name}: ${n} ${st.unit === "×" ? "in a row" : wk ? (st.unit === "wk" ? "weeks" : "months") : "days"}`, `${n}-long streak`, st.best, n)); });
+  (S.cfg.goals||[]).forEach(g => { const s = goalStats(g); add("g-"+g.id, "🎓", `Finished ${g.name}`, "Every part at 100%", s.total > 0 && s.rem <= 0 ? 1 : 0, 1); });
+  return S.memo.bd = out; }
 function streaks(h){
   const m = S.memo["st"+h.id]; if (m) return m;
   const t = today(), tk = key(t), runs = []; let run = 0, from = null, to = null, cur = 0, u = "d";
   const close = () => { if (run) runs.push({len:run, from, to}); run = 0; };
-  if (fixed(h)) { for (let d = parse(h.start); d <= t; d = addDays(d,1)) { const k = key(d); if (!scheduled(h,k) || skipped(k,h.id)) continue;
+  if (fixed(h)) { for (let d = parse(h.start); d <= t; d = addDays(d,1)) { const k = key(d); if (!scheduled(h,k) || skipped(k,h.id) || shielded(h,k)) continue;
       if (kept(h,k)) { if (!run) from = k; run++; to = k; } else if (k !== tk) close(); } cur = run; close(); }
   else if (h.sch.k === "interval") { u = "×"; let prev = null;
     for (let d = parse(h.start); d <= t; d = addDays(d,1)) { const k = key(d); if (!kept(h,k)) continue; if (prev && daysBetween(prev,d) > h.sch.n) close(); if (!run) from = k; run++; to = k; prev = d; }
@@ -395,7 +492,7 @@ function rate30(h){ const t = today(); let exp = 0, got = 0;
   return exp > 0 ? Math.min(1, got/exp) : 0; }
 function totals(h){ let n = 0, sum = 0; Object.values(S.months).forEach(m => Object.entries(m.d||{}).forEach(([k,d]) => { const e = d.h?.[h.id]; if (e !== undefined) { sum += +e||0; if (kept(h,k)) n++; } })); return {n, sum}; }
 function missed(){ const t = today(), yk = key(addDays(t,-1)), out = [];
-  habits().forEach(h => { if (!fixed(h) || !scheduled(h,yk) || skipped(yk,h.id) || kept(h,yk)) return;
+  habits().forEach(h => { if (!fixed(h) || !scheduled(h,yk) || skipped(yk,h.id) || kept(h,yk) || shielded(h,yk)) return;
     let twice = false; for (let i=2;i<10;i++){ const k = key(addDays(t,-i)); if (k < h.start) break; if (!scheduled(h,k) || skipped(k,h.id)) continue; twice = !kept(h,k); break; }
     out.push({h, twice}); });
   return out; }
@@ -416,7 +513,34 @@ function goalStats(g){
 }
 
 /* ---------- ui helpers ---------- */
-function toast(msg){ const t = document.getElementById("toast"); t.textContent = msg; t.hidden = false; clearTimeout(toast._t); toast._t = setTimeout(()=>t.hidden=true, 2400); }
+function toast(msg, undo){ const t = document.getElementById("toast"); t.innerHTML = `<span style="overflow:hidden;text-overflow:ellipsis">${esc(msg)}</span>${undo ? `<button type="button">Undo</button>` : ""}`; t.hidden = false; toast._undo = undo || null;
+  clearTimeout(toast._t); toast._t = setTimeout(() => { t.hidden = true; toast._undo = null; }, undo ? 4000 : 2400); }
+document.getElementById("toast").addEventListener("click", e => { if (!e.target.closest("button") || !toast._undo) return; const u = toast._undo; toast._undo = null; document.getElementById("toast").hidden = true; u(); });
+const buzz = p => { if (S.cfg?.vibe === false) return; try { navigator.vibrate && navigator.vibrate(p); } catch(e){} };
+const motionOK = () => S.cfg?.anim !== false && !matchMedia("(prefers-reduced-motion: reduce)").matches;
+function confetti(cv){ const ctx = cv.getContext("2d"), dpr = Math.min(2, devicePixelRatio || 1), W = cv.clientWidth, Hh = cv.clientHeight; cv.width = W*dpr; cv.height = Hh*dpr; ctx.scale(dpr,dpr);
+  const cs = getComputedStyle(document.documentElement), cols = ["--c1","--c2","--c3","--c4","--c5","--c6","--c7"].map(v => cs.getPropertyValue(v).trim() || "#2B5BD7");
+  const ps = Array.from({length:140}, () => ({x:W/2 + (Math.random()-.5)*60, y:Hh*.45, vx:(Math.random()-.5)*12, vy:-Math.random()*13-4, r:Math.random()*6+3, c:cols[Math.floor(Math.random()*cols.length)], a:Math.random()*6, s:(Math.random()-.5)*.3}));
+  const t0 = performance.now(); (function f(t){ const el = (t - t0)/1000; ctx.clearRect(0,0,W,Hh); ps.forEach(p => { p.vy += .35; p.x += p.vx; p.y += p.vy; p.vx *= .99; p.a += p.s; ctx.save(); ctx.translate(p.x,p.y); ctx.rotate(p.a); ctx.globalAlpha = Math.max(0, 1 - el/2.2); ctx.fillStyle = p.c; ctx.fillRect(-p.r/2,-p.r/4,p.r,p.r/2); ctx.restore(); });
+    if (el < 2.2 && cv.isConnected) requestAnimationFrame(f); })(t0); }
+function overlay({em, title, body, confetti:conf, share}){ document.querySelector(".ovl")?.remove();
+  const o = document.createElement("div"); o.className = "ovl"; o.setAttribute("role","dialog"); o.setAttribute("aria-modal","true");
+  o.innerHTML = `<canvas aria-hidden="true"></canvas><div class="ovlcard"><div class="em" aria-hidden="true">${esc(em)}</div><h2>${esc(title)}</h2>${body ? `<p class="small muted">${esc(body)}</p>` : ""}<div class="row" style="justify-content:center">${share && canShare() ? `<button class="btn" data-ovl="share">Share</button>` : ""}<button class="btn primary" data-ovl="close">Nice</button></div></div>`;
+  o.addEventListener("click", e => { const b = e.target.closest("[data-ovl]"); if (b && b.dataset.ovl === "share") { share(); return; } if (b || e.target === o) o.remove(); });
+  document.body.appendChild(o); o.querySelector("[data-ovl=close]").focus(); if (conf && motionOK()) confetti(o.querySelector("canvas")); }
+const canShare = () => S.standalone && !!(window.Blob && document.createElement("canvas").toBlob);
+function logAction(h, k, fn, loud){ const tk = key(today()); S.memo = {}; const was = kept(h,k), dayWas = k === tk ? dayStatus(k) : null, prevE = ent(k,h.id), prevS = skipped(k,h.id);
+  fn(); S.memo = {}; const now = kept(h,k);
+  const undo = () => { const hh = {...(day(k).h||{})}; if (prevE === undefined) delete hh[h.id]; else hh[h.id] = prevE; const ss = {...(day(k).s||{})}; if (prevS) ss[h.id] = true; else delete ss[h.id]; saveDay(k, {h:hh, s:ss}); toast("Undone"); };
+  if (k === tk && !dayWas && dayStatus(k)) { const n = habits().filter(x => mustToday(x,k)).length, run = perfectRun(); buzz([30,60,30]);
+    toast(`${iconOf(h)} ${h.name}`, undo); return overlay({em:"🎉", title:"Day complete", body:`All ${n} done.${run > 1 ? ` That's ${run} perfect days in a row.` : " Now rest. Tomorrow starts fresh."}`, confetti:true}); }
+  if (!was && now) { buzz(15); requestAnimationFrame(() => document.querySelector(`.ringbtn[data-h="${h.id}"]`)?.classList.add("pop")); toast(`${iconOf(h)} ${h.name} done`, undo); }
+  else if (loud) toast(`${iconOf(h)} ${h.name} ${skipped(k,h.id) && !prevS ? "skipped" : "updated"}`, undo); }
+function checkBadges(){ const c = S.cfg; if (!c || document.querySelector(".ovl")) return; const got = badges().filter(b => b.got).map(b => b.id);
+  if (!Array.isArray(c.seen)) { c.seen = got; queueWrite("config", () => S.cfg); return; }
+  const fresh = got.filter(id => !c.seen.includes(id)); if (!fresh.length) return; c.seen = [...c.seen, ...fresh]; queueWrite("config", () => S.cfg);
+  const b = badges().find(x => x.id === fresh[0]); buzz([20,40,20]);
+  overlay({em:b.icon, title:"New milestone", body:`${b.title}${fresh.length > 1 ? ` (and ${fresh.length-1} more in Trophies)` : ""}.`, confetti:true, share:() => shareCard({kind:"badge", b})}); }
 const col = h => `var(--${PAL.includes(h.color)?h.color:"c1"})`;
 const soft = c => `color-mix(in srgb, ${c} 15%, transparent)`;
 function ring(r, pct, c){ const L = 2*Math.PI*r, p = Math.max(0, Math.min(1, pct)); return `<circle cx="66" cy="66" r="${r}" fill="none" stroke="${soft(c)}" stroke-width="11"/><circle class="ringarc" cx="66" cy="66" r="${r}" fill="none" stroke="${c}" stroke-opacity="${p>0?1:0}" stroke-width="11" stroke-linecap="round" stroke-dasharray="${(L*p).toFixed(1)} ${L.toFixed(1)}" transform="rotate(-90 66 66)"/>`; }
@@ -436,24 +560,26 @@ try { matchMedia("(prefers-color-scheme: dark)").addEventListener("change", appl
 function getTimer(){ return LS.get("timer") || S._timer || null; }
 function putTimer(t){ S._timer = t; try { t ? localStorage.setItem("nt_timer", JSON.stringify(t)) : localStorage.removeItem("nt_timer"); } catch(e){} }
 function stopTimer(full){ const t = getTimer(); if (!t) return; const m = full ? t.dur : Math.min(t.dur, Math.floor((Date.now()-t.start)/60000)); putTimer(null);
-  if (m >= 1 && hab(t.hid)) { setEnt(t.day, t.hid, val(t.day,t.hid)+m); toast(`Logged ${m} min`); } else render(); }
+  const h = hab(t.hid); if (m >= 1 && h) { logAction(h, t.day, () => setEnt(t.day, t.hid, val(t.day,t.hid)+m)); if (!document.querySelector(".ovl") && !toast._undo) toast(`Logged ${m} min`); } else render(); }
 setInterval(() => { const t = getTimer(); if (!t) return; const left = t.dur*60 - Math.floor((Date.now()-t.start)/1000);
   if (left <= 0) return stopTimer(true); const el = document.getElementById("timerDisplay"); if (el) el.textContent = `${pad(Math.floor(left/60))}:${pad(left%60)}`; }, 1000);
 
 /* ---------- onboarding ---------- */
-const AREAS = [["fit","Get fitter and stronger"],["student","Study or learn consistently"],["sleep","Sleep better"],["deep","Focus better at work"],["calm","Feel calmer and less stressed"],["morning","Have a solid morning routine"],["eat","Eat better"],["reader","Read more"],["detox","Spend less time on my phone"],["money","Get my money under control"],["home","Keep my home in order"],["cut","Cut back on something"],["job","Find a new job"],["side","Build something of my own"],["lang","Learn a language"]];
+const AREAS = [["fit","Get fitter and stronger","💪"],["student","Study or learn consistently","📚"],["sleep","Sleep better","😴"],["deep","Focus better at work","🎯"],["calm","Feel calmer and less stressed","🧘"],["morning","Have a solid morning routine","☀️"],["eat","Eat better","🥗"],["reader","Read more","📖"],["detox","Spend less time on my phone","📵"],["money","Get my money under control","💶"],["home","Keep my home in order","🏡"],["cut","Cut back on something","✂️"],["job","Find a new job","💼"],["side","Build something of my own","🚀"],["lang","Learn a language","🗣️"]];
+const TPL_ICON = {exam:"🎓",student:"📚",fit:"💪",runner:"🏃",calm:"🧘",morning:"☀️",sleep:"😴",eat:"🥗",deep:"🎯",side:"🚀",job:"💼",lang:"🗣️",reader:"📖",detox:"📵",cut:"✂️",home:"🏡",money:"💶",blank:"✏️"};
+const tplItems = id => TEMPLATES[id].list.map(([n,o]) => { const src = libFind(n) || {}; return {name:o?.name || n, icon:o?.icon || src.icon || ICONS[n] || "🎯"}; });
 const PACES = [["gentle","Gentle","Small targets you can't fail. Build up once it sticks."],["steady","Steady","The standard targets. A real stretch without being heroic."],["ambitious","Ambitious","Bigger targets and more days. For when you already have momentum."]];
-const newOb = () => ({step:"areas", i:0, yes:{}, pace:"steady", deck:[], all:[], hi:0, keep:{}});
+const newOb = () => ({step:"areas", i:0, yes:{}, pace:"steady", deck:[], all:[], hi:0, keep:{}, drop:{}});
 function scaleHabit(h, pace){ if (pace === "steady" || h.noScale) return h; const up = pace === "ambitious";
   if (h.type !== "check" && h.target > 0) { const f = isMax(h) ? (up ? .75 : 1.5) : (up ? 1.5 : .5), q = h.type === "time" ? 5 : (h.step > 1 ? h.step : 1); h.target = Math.max(q, Math.round(h.target*f/q)*q); }
   if (h.sch.k === "week") h.sch.n = Math.max(1, Math.min(7, h.sch.n + (up ? 1 : -1)));
   return h; }
 function obBuild(){ const ob = S.ob; ob.all = []; ob.deck = []; ob.hi = 0; ob.keep = {};
-  AREAS.filter(([id]) => ob.yes[id]).forEach(([id]) => tplHabits(id).forEach((h,idx) => { if (ob.all.some(x=>x.name===h.name)) return; scaleHabit(h, ob.pace); h.area = TEMPLATES[id].name; ob.all.push(h); if (idx < 3 && ob.deck.length < 15) ob.deck.push(h); }));
+  AREAS.filter(([id]) => ob.yes[id]).forEach(([id]) => tplHabits(id).filter(h => !(ob.drop[id]||{})[h.name]).forEach((h,idx) => { if (ob.all.some(x=>x.name===h.name)) return; scaleHabit(h, ob.pace); h.area = TEMPLATES[id].name; h.areaIcon = TPL_ICON[id]; ob.all.push(h); if (idx < 3 && ob.deck.length < 15) ob.deck.push(h); }));
   ob.step = "habits"; }
 function obFinish(){ const ob = S.ob, anyYes = ob.deck.some(h=>ob.keep[h.id]), on = {};
   ob.deck.forEach((h,idx) => { if (anyYes ? ob.keep[h.id] : idx >= ob.hi || ob.keep[h.id] !== false) on[h.id] = true; });
-  ob.all.forEach(h => { delete h.area; });
+  ob.all.forEach(h => { delete h.area; delete h.areaIcon; });
   S.setup = {tpls:AREAS.filter(([id])=>ob.yes[id]).map(([id])=>id), habits:ob.all, on, mode: S.cfg && habits().length ? "add" : "replace"};
   S.ob = null; S.onboarding = false; S.gallery = false; }
 function obSwipe(dir){ const ob = S.ob; if (!ob || ob.step === "pace") return;
@@ -470,22 +596,30 @@ function vSwipe(){
       <p class="muted">You picked ${n} area${n===1?"":"s"}. This sets the size of the targets. You can change any of them afterwards.</p>
       ${PACES.map(([id,name,d]) => `<button class="tpl" data-act="sw-pace" data-v="${id}"><b>${name}</b><span class="small muted">${d}</span></button>`).join("")}`; }
   const areas = ob.step === "areas", n = areas ? AREAS.length : ob.deck.length, i = areas ? ob.i : ob.hi;
-  const face = j => { if (j >= n) return ""; if (areas) { const [id, say] = AREAS[j], t = TEMPLATES[id];
-      return `<div class="eyebrow">I want to</div><div class="say">${say}</div><p class="small muted">${t.desc}</p><span class="hs" style="display:flex;flex-wrap:wrap;gap:4px 10px;font-size:12px;color:var(--ink-2)">${t.list.slice(0,4).map(([nm,o])=>`<span style="display:inline-flex;align-items:center;gap:5px"><i style="width:7px;height:7px;border-radius:50%;display:block;background:var(--${(o?.color)||libFind(nm)?.color||"c1"})"></i>${esc(o?.name||nm)}</span>`).join("")}</span>`; }
-    const h = ob.deck[j]; return `<div class="eyebrow" style="color:${col(h)}">${esc(h.area)}</div><div class="say">${esc(h.name)}</div><p class="num small">${esc(schedLabel(h))}</p><p class="small muted">${h.q ? esc(h.q) : h.type === "time" && !isMax(h) ? "Tracked with a focus timer." : isMax(h) ? "A daily limit you log against." : h.type === "count" ? "Counted with a tap." : "A simple tick when it's done."}</p>`; };
+  const face = (j, front) => { if (j >= n) return ""; if (areas) { const [id, say, em] = AREAS[j], drop = ob.drop[id] || {};
+      return `<div class="bigico" aria-hidden="true">${em}</div><div class="eyebrow">I want to</div><div class="say">${say}</div>
+        <div class="cust"><span class="lbl">${front ? "Includes these. Tap one to leave it out." : "Includes"}</span><div class="pchips">${tplItems(id).map(x => `<button class="pchip" ${front ? `data-act="sw-drop" data-a="${id}" data-v="${esc(x.name)}"` : "tabindex=-1"} aria-pressed="${!drop[x.name]}"><span aria-hidden="true">${x.icon}</span>${esc(x.name)}</button>`).join("")}</div></div>`; }
+    const h = ob.deck[j], a = `data-h="${h.id}" data-w="ob"`, numeric = h.type !== "check", s = h.sch;
+    const amt = numeric ? `<div><div class="lbl">${isMax(h) ? "Daily limit" : "Daily target"}</div><div class="stp"><button class="btn" data-act="ob-n" ${a} data-f="target" data-n="-1" aria-label="Less">−</button><span class="num">${fmtV(h,tgt(h))}</span><button class="btn" data-act="ob-n" ${a} data-f="target" data-n="1" aria-label="More">+</button></div></div>` : "";
+    const often = `<div><div class="lbl">How often</div>${seg("ob-sch", [["daily","Daily"],["days","Weekdays"],["week","Per week"]], s.k === "week" || s.k === "month" || s.k === "interval" ? "week" : s.k, a)}</div>
+      ${s.k === "week" ? `<div class="stp"><button class="btn" data-act="ob-n" ${a} data-f="sch.n" data-n="-1" aria-label="Fewer days">−</button><span class="num">${s.n}× a week</span><button class="btn" data-act="ob-n" ${a} data-f="sch.n" data-n="1" aria-label="More days">+</button></div>` : ""}`;
+    return `<div class="row" style="gap:12px;flex-wrap:nowrap"><span class="bigico" aria-hidden="true">${esc(iconOf(h))}</span><div style="min-width:0"><div class="eyebrow" style="color:${col(h)}">${esc(h.areaIcon || "")} ${esc(h.area)}</div><div class="say" style="font-size:26px">${esc(h.name)}</div></div></div>
+      ${front ? `<div class="cust">${amt}${often}</div>` : `<p class="num small">${esc(schedLabel(h))}</p>`}`; };
   return `<div class="top"><div><div class="eyebrow">Step ${areas?1:3} of 3</div><h1>${areas ? "What do you want more of?" : "Which of these would you do?"}</h1></div>${i > 0 || !areas ? `<button class="btn sm" data-act="sw-back">Back</button>` : ""}</div>
-    <p class="muted">Swipe right for yes, left for no. ${areas ? "There are no wrong answers, and you'll shape the details next." : "You can still change targets and add your own afterwards."}</p>
+    <p class="muted">${areas ? "Swipe right for yes, left for no. Tap a habit on the card to leave it out." : "Adjust the numbers on the card first if you like, then swipe right to keep it or left to skip it."}</p>
     <div class="row between"><span class="num small muted">${Math.min(i+1,n)} of ${n}</span><div class="bar grow"><i style="width:${i/n*100}%"></i></div></div>
-    <div class="deck">${i+1 < n ? `<div class="scard back">${face(i+1)}</div>` : ""}<div class="scard" id="swipeCard" tabindex="0" aria-label="Swipe card. Use the Yes and No buttons, or the arrow keys."><span class="stamp n">NO</span><span class="stamp y">YES</span>${face(i)}</div></div>
+    <div class="deck">${i+1 < n ? `<div class="scard back">${face(i+1,false)}</div>` : ""}<div class="scard" id="swipeCard" tabindex="0" aria-label="Swipe card. Use the Yes and No buttons, or the arrow keys."><span class="stamp n">NO</span><span class="stamp y">YES</span>${face(i,true)}</div></div>
     <div class="sbtns"><button class="btn no" data-act="sw-no">Not for me</button><span></span><button class="btn yes" data-act="sw-yes">Yes</button></div>
     ${areas ? alt : `<button class="btn sm" data-act="sw-skip">Skip the rest and see my list</button>`}`;
 }
 function vOnboard(){
   const pick = S.pick || (S.pick = {}), ids = Object.keys(pick).filter(k=>pick[k]), more = !!S.setup, names = new Set((S.setup?.habits||[]).map(h=>h.name)); let add = 0;
-  ids.forEach(id => TEMPLATES[id].list.forEach(([n,o]) => { const nm = o?.name||n; if (!names.has(nm)) { names.add(nm); add++; } }));
+  ids.forEach(id => tplItems(id).forEach(({name:nm}) => { if (((S.tdrop||{})[id]||{})[nm]) return; if (!names.has(nm)) { names.add(nm); add++; } }));
   return `<div class="top"><div><div class="eyebrow">Never Twice</div><h1>${more?"Add more templates":"Pick a starting point"}</h1></div><button class="btn sm" data-act="${more||S.cfg ? "tpl-cancel" : "sw-start"}">${more ? "Back" : S.cfg ? "Cancel" : "Swipe instead"}</button></div>
-    <p class="muted">Tick one template or combine several. A habit that appears in more than one is added once, and you can change every habit on the next screen.</p>
-    ${Object.entries(TEMPLATES).filter(([id]) => id !== "blank" && !(S.setup?.tpls||[]).includes(id)).map(([id,t]) => `<button class="tpl" data-act="tpl-toggle" data-v="${id}" aria-pressed="${!!pick[id]}"><span class="hd"><b>${t.name}</b><span class="ck"></span></span><span class="small muted">${t.desc}</span><span class="hs">${t.list.map(([n,o])=>`<span><i style="background:var(--${(o?.color)||libFind(n)?.color||"c1"})"></i>${esc(o?.name||n)}</span>`).join("")}</span></button>`).join("")}
+    <p class="muted">Tick one template or combine several. Tap a habit inside a template to leave it out. Duplicates are added once, and every habit can be changed on the next screen.</p>
+    ${Object.entries(TEMPLATES).filter(([id]) => id !== "blank" && !(S.setup?.tpls||[]).includes(id)).map(([id,t]) => { const on = !!pick[id], drop = (S.tdrop||{})[id] || {};
+      return `<div class="tplcard ${on?"on":""}"><button class="tphead" data-act="tpl-toggle" data-v="${id}" aria-pressed="${on}"><span class="bigico" style="font-size:30px" aria-hidden="true">${TPL_ICON[id]||"✨"}</span><b>${t.name}</b><span class="ck"></span></button>
+        <div class="pchips">${tplItems(id).map(x => `<button class="pchip" data-act="tpl-drop" data-a="${id}" data-v="${esc(x.name)}" aria-pressed="${!drop[x.name]}"><span aria-hidden="true">${x.icon}</span>${esc(x.name)}</button>`).join("")}</div></div>`; }).join("")}
     <div class="stick"><button class="btn primary" data-act="tpl-next" ${ids.length?"":"disabled"}>${ids.length ? `Continue with ${ids.length} template${ids.length===1?"":"s"} · ${add} habit${add===1?"":"s"}` : "Tick at least one template"}</button>${more ? "" : `<button class="btn" data-act="tpl-blank">Start blank and build my own</button>`}</div>`;
 }
 function quickFields(h, where){ // the numbers people most want to change, inline
@@ -496,6 +630,17 @@ function quickFields(h, where){ // the numbers people most want to change, inlin
     : s.k === "interval" ? `<label class="f grow">Every how many days<input type="number" min="2" max="90" ${a} data-f="sch.n" value="${s.n}"></label>` : "";
   return amount || often ? `<div class="row">${amount}${often}</div>` : "";
 }
+function iconPicker(h, where){ const a = `data-h="${h.id}" data-w="${where}"`, cur = iconOf(h);
+  return `<div class="f">Icon<div class="icogrid">${ICON_PICK.map(e => `<button data-act="h-icon" ${a} data-v="${e}" aria-pressed="${e===cur}" aria-label="Icon ${e}">${e}</button>`).join("")}</div>
+    <label class="f">Or type any emoji<input type="text" ${a} data-f="icon" value="${esc(cur)}" maxlength="8" style="max-width:120px"></label></div>`; }
+function moreFields(h, where){ const a = `data-h="${h.id}" data-w="${where}"`;
+  return `${iconPicker(h, where)}
+    <div class="f">Colour<div class="row">${PAL.map(p=>`<button class="sw" style="background:var(--${p})" data-act="h-color" ${a} data-v="${p}" aria-pressed="${h.color===p}" aria-label="Colour ${p.slice(1)}"></button>`).join("")}</div></div>
+    <div class="f">Time of day${seg("h-tod", TOD, h.tod, a)}</div>
+    <div class="f">How you track it${seg("h-type", [["check","Done / not"],["time","Minutes"],["count","A number"]], h.type, a)}</div>
+    ${h.type !== "check" ? `<div class="f">The goal is${seg("h-dir", [["min","At least"],["max","At most"]], h.dir, a)}</div>` : ""}
+    ${h.type === "count" ? `<div class="row"><label class="f grow">Unit<input type="text" ${a} data-f="unit" value="${esc(h.unit)}" placeholder="glasses, pages, km"></label><label class="f grow">+ / − step<input type="number" min="1" ${a} data-f="step" value="${h.step}"></label></div>` : ""}
+    <label class="f">Question or prompt (optional)<input type="text" ${a} data-f="q" value="${esc(h.q)}" placeholder="e.g. Did you stretch after training?"></label>`; }
 function vSetup(){
   const su = S.setup, have = new Set(habits().map(h=>h.name)), canAdd = !!(S.cfg && habits().length), addMode = canAdd && su.mode === "add";
   const list = su.habits.filter(h => !(addMode && have.has(h.name))), dup = su.habits.length - list.length, n = list.filter(h=>su.on[h.id]).length;
@@ -503,9 +648,10 @@ function vSetup(){
     <p class="muted">Untick what you don't want. Change names, targets and how often. Everything stays editable later, along with colours, units, timers and more.</p>
     ${canAdd ? `<div class="card"><div class="f">What should happen to the habits you already have?${seg("setup-mode", [["add","Keep them, add these"],["replace","Replace them"]], su.mode)}</div><p class="note">${addMode ? "Your current habits and their history stay as they are." : "Your current habits are removed from the list. Logged days are kept."}</p></div>` : ""}
     ${list.map(h => `<div class="card" style="--hc:${col(h)}">
-      ${tick("setup-on", su.on[h.id], h.name, schedLabel(h), `data-h="${h.id}"`)}
+      ${tick("setup-on", su.on[h.id], iconOf(h) + "  " + h.name, schedLabel(h), `data-h="${h.id}"`)}
       ${su.on[h.id] ? `<label class="f">Name<input type="text" data-h="${h.id}" data-w="setup" data-f="name" value="${esc(h.name)}"></label>
-        <div class="f">How often${seg("setup-sch", [["daily","Daily"],["days","Weekdays"],["week","Per week"],["interval","Every N days"]], h.sch.k === "month" ? "week" : h.sch.k, `data-h="${h.id}"`)}</div>${quickFields(h,"setup")}` : ""}</div>`).join("")}
+        <div class="f">How often${seg("setup-sch", [["daily","Daily"],["days","Weekdays"],["week","Per week"],["interval","Every N days"]], h.sch.k === "month" ? "week" : h.sch.k, `data-h="${h.id}"`)}</div>${quickFields(h,"setup")}
+        <details ${S.more===h.id?"open":""}><summary data-more="${h.id}">More options: icon, colour, time of day, goal type</summary><div class="col" style="margin-top:10px">${moreFields(h,"setup")}</div></details>` : ""}</div>`).join("")}
     ${dup ? `<p class="note">${dup} habit${dup===1?" is":"s are"} already in your list and left out here.</p>` : ""}
     <div class="row"><button class="btn grow" data-act="setup-more">Add another template</button><button class="btn grow" data-act="setup-add">Add from the library</button></div>
     <div class="stick"><button class="btn primary" data-act="setup-go" ${n || (!addMode && su.tpls.includes("blank")) ? "" : "disabled"}>${addMode ? `Add ${n} habit${n===1?"":"s"}` : `Start with ${n} habit${n===1?"":"s"}`}</button></div>`;
@@ -513,29 +659,33 @@ function vSetup(){
 
 /* ---------- today ---------- */
 function habitRow(h, k, timer, isToday){
-  const e = ent(k,h.id), v = val(k,h.id), c = col(h), dd = parse(k), ws = weekOf(dd), st = streaks(h), sk = skipped(k,h.id), a = `data-h="${h.id}"`, t = tgt(h);
+  const e = ent(k,h.id), v = val(k,h.id), c = col(h), dd = parse(k), st = streaks(h), sk = skipped(k,h.id), a = `data-h="${h.id}"`, t = tgt(h);
   const over = isMax(h) && v > t, done = kept(h,k), pct = isMax(h) ? (e === undefined ? 0 : t ? Math.min(1, v/t) : (v ? 1 : 0)) : frac(h,k);
-  const dots = `<span class="dots">${[6,5,4,3,2,1,0].map(i => { const dk = key(addDays(dd,-i)); if (dk < h.start) return `<i></i>`; if (skipped(dk,h.id)) return `<i class="sk"></i>`; const f = frac(h,dk); return `<i style="${f>0?`background:${c};opacity:${Math.max(.35,f)}`:""}"></i>`; }).join("")}</span>`;
-  const sub = sk ? "Skipped. The streak is safe." : [weekLabel(h,ws), stTxt(st)].filter(Boolean).join(" · ");
+  const runs = timer && timer.hid === h.id, open = S.open === h.id || runs, must = day(k).must === h.id;
+  const dots = `<span class="dots">${[6,5,4,3,2,1,0].map(i => { const dk = key(addDays(dd,-i)); if (dk < h.start) return `<i></i>`; if (skipped(dk,h.id) || shielded(h,dk)) return `<i class="sk"></i>`; const f = frac(h,dk); return `<i style="${f>0?`background:${c};opacity:${Math.max(.35,f)}`:""}"></i>`; }).join("")}</span>`;
+  const opt = !fixed(h) && !mustToday(h,k) ? `<span>Optional today · ${weekLabel(h, weekOf(dd))}</span>` : "";
+  const sub = sk ? `<span>Skipped. Streak safe.</span>` : opt ? opt + dots : `${st.cur ? `<span>🔥 ${st.cur}${st.unit === "d" ? "" : " " + st.unit}</span>` : ""}${dots}`;
   const mode = sk ? "skip" : over ? "over" : done && (h.type === "check" || met(h,k)) ? "done" : h.type === "count" && !isMax(h) && !v ? "plus" : "";
   const ringC = over ? "var(--bad)" : c;
   const ringEl = h.type === "check" ? `<button class="ringbtn" data-act="check" ${a} aria-pressed="${!!e}" aria-label="${e?"Undo":"Mark done"}: ${esc(h.name)}">${mini(e?1:0, c, mode)}</button>`
-    : h.type === "count" ? `<button class="ringbtn" data-act="add" ${a} data-n="${h.step}" aria-label="Add ${h.step} to ${esc(h.name)}">${mini(pct, ringC, mode)}</button>` : `<span class="ringbtn">${mini(pct, ringC, mode)}</span>`;
-  const right = h.type === "check" ? "" : isMax(h) ? `${e === undefined ? "–" : r1(v)} / ${r1(t)}<br><span class="note">max${unit(h)?" "+esc(unit(h)):""}</span>` : `${r1(v)} / ${r1(t)}${unit(h)?`<br><span class="note">${esc(unit(h))}</span>`:""}`;
-  const head = `<div class="hrow">${ringEl}<button class="hname" data-act="detail" ${a}><span class="t">${esc(h.name)}</span><span class="s">${esc(sub)}</span>${dots}</button><span class="hval">${right}</span></div>`;
-  if (sk || h.type === "check") return `<div class="hab" style="--hc:${c}">${head}</div>`;
-  const gate = S.cfg.focusGate && !day(k).pa; let body;
-  if (h.type === "time" && !isMax(h)) body = timer && timer.hid === h.id
+    : h.type === "count" ? `<button class="ringbtn" data-act="add" ${a} data-n="${h.step}" aria-label="Add ${h.step} to ${esc(h.name)}">${mini(pct, ringC, mode)}</button>`
+    : `<button class="ringbtn" data-act="hopen" ${a} aria-label="Open ${esc(h.name)}">${mini(pct, ringC, mode)}</button>`;
+  const right = h.type === "check" ? "" : isMax(h) ? `${e === undefined ? "–" : r1(v)}/${r1(t)}<br><span class="note">max ${esc(unit(h))}</span>` : `${r1(v)}/${r1(t)}${unit(h) ? `<br><span class="note">${esc(unit(h))}</span>` : ""}`;
+  const head = `<div class="hrow">${ringEl}<button class="hname" data-act="hopen" ${a} aria-expanded="${open}"><span class="t">${must ? "⭐ " : ""}${ico(h)} ${esc(h.name)}</span><span class="s">${sub}</span></button><span class="hval">${right}</span></div>`;
+  if (!open) return `<div class="hab c" style="--hc:${c}">${head}</div>`;
+  const gate = S.cfg.focusGate && !day(k).pa; let ctl = "";
+  if (!sk && h.type === "time" && !isMax(h)) ctl = runs
     ? `<div class="row between"><div class="timer" id="timerDisplay">--:--</div><button class="btn" data-act="timer-stop">Stop &amp; log</button></div>`
-    : `<div class="row" style="gap:6px">${isToday ? h.presets.slice(0,3).map((p,i)=>`<button class="btn sm ${i?"":"primary"}" data-act="timer" ${a} data-n="${p}" ${gate||timer?"disabled":""}>${i?`${p} min`:`Start ${p} min`}</button>`).join("") : ""}<span class="grow"></span><button class="btn sm" data-act="add" ${a} data-n="-15" aria-label="Remove 15 minutes">−15</button><button class="btn sm" data-act="add" ${a} data-n="15">+15</button></div>`;
-  else { const stp = h.type === "time" ? 15 : h.step;
-    body = `<div class="row" style="gap:6px">${h.q ? `<span class="note grow">${esc(h.q)}</span>` : `<span class="grow"></span>`}${isMax(h) && e === undefined ? `<button class="btn sm" data-act="zero" ${a}>Log 0</button>` : ""}<button class="btn sm" data-act="add" ${a} data-n="${-stp}" aria-label="Less">−${stp}</button><button class="btn sm" data-act="add" ${a} data-n="${stp}" aria-label="More">+${stp}</button></div>`; }
-  return `<div class="hab" style="--hc:${c}">${head}${body}</div>`;
+    : `${isToday ? `<div class="row" style="gap:6px">${h.presets.slice(0,3).map((p,i)=>`<button class="btn sm ${i?"":"primary"}" data-act="timer" ${a} data-n="${p}" ${gate||timer?"disabled":""}>${i?`${p} min`:`▶ Start ${p} min`}</button>`).join("")}</div>` : ""}<div class="row" style="gap:6px"><span class="note grow">Or log time by hand</span><button class="btn sm" data-act="add" ${a} data-n="-15" aria-label="Remove 15 minutes">−15</button><button class="btn sm" data-act="add" ${a} data-n="15">+15</button></div>`;
+  else if (!sk && h.type !== "check") { const stp = h.type === "time" ? 15 : h.step;
+    ctl = `<div class="row" style="gap:6px"><span class="grow"></span>${isMax(h) && e === undefined ? `<button class="btn sm" data-act="zero" ${a}>Log 0</button>` : ""}<button class="btn sm" data-act="add" ${a} data-n="${-stp}" aria-label="Less">−${stp}</button><button class="btn sm" data-act="add" ${a} data-n="${stp}" aria-label="More">+${stp}</button></div>`; }
+  return `<div class="hab c" style="--hc:${c}">${head}<div class="hx">${h.q ? `<span class="note">${esc(h.q)}</span>` : ""}${ctl}
+    <div class="row" style="gap:6px"><button class="btn sm" data-act="skip" ${a}>${sk ? "Undo skip" : "Skip today"}</button>${isToday ? `<button class="btn sm" data-act="must" ${a}>${must ? "⭐ Must-do" : "☆ Make must-do"}</button>` : ""}<span class="grow"></span><button class="btn sm" data-act="detail" ${a}>Details</button></div></div></div>`;
 }
 function verdict(){
   const t = today(), ws = weekOf(t), tk = key(t), hs = habits(), lines = [];
   if (!hs.length) return ["Add a habit to get a verdict."];
-  const rated = hs.map(h => { const e = expected(h,ws,tk); return {h, r: e > 0 ? weekDone(h,ws,tk)/e : 1}; }).sort((a,b)=>b.r-a.r);
+  const rated = hs.map(h => { const e = expectedFair(h,ws,tk); return {h, r: e > 0 ? weekDone(h,ws,tk)/e : 1}; }).sort((a,b)=>b.r-a.r);
   lines.push(`Week score ${weekScore(ws)}. ${rated.filter(x=>x.r>=1).length} of ${hs.length} habits are on pace.`);
   const worst = rated[rated.length-1], best = rated[0], daysLeft = 7 - ((dowIdx(t) - wsI() + 7) % 7), dl = `${daysLeft} day${daysLeft===1?"":"s"} left`;
   if (best.r > 0 && best.h !== worst.h) lines.push(best.r >= 1 ? `Strongest: ${best.h.name}, on or ahead of pace.` : `Strongest: ${best.h.name} at ${Math.round(best.r*100)}% of where it should be.`);
@@ -547,39 +697,91 @@ function verdict(){
   const m = missed(); if (m.some(x=>x.twice)) lines.push(S.cfg.tone === "gentle" ? `${m.filter(x=>x.twice).map(x=>x.h.name).join(", ")} has slipped two days running. A few minutes today is enough to get it back.` : `You've missed ${m.filter(x=>x.twice).map(x=>x.h.name).join(", ")} twice in a row. That's the one rule. Do the smallest version today.`);
   return lines;
 }
+function recapData(ws){ const end = addDays(ws,6), ek = key(end), hs = habits().filter(h => h.start <= ek);
+  const rated = hs.map(h => { const e = expected(h,ws,ek); return {h, r: e > 0 ? Math.min(1.5, weekDone(h,ws,ek)/e) : 1, done: weekDone(h,ws,ek)}; }).sort((a,b) => b.r - a.r);
+  let pd = 0, ci = 0, moods = []; for (let i=0;i<7;i++) { const k = key(addDays(ws,i)); if (dayStatus(k)) pd++; hs.forEach(h => { if (kept(h,k)) ci++; }); if (day(k).mood) moods.push(day(k).mood); }
+  const top = hs.map(h => ({h, st:streaks(h)})).sort((a,b) => b.st.cur - a.st.cur)[0];
+  return {ws, end, score: weekScore(ws), pd, ci, best: rated[0], fix: rated.length > 1 && rated[rated.length-1].r < 1 ? rated[rated.length-1] : null, top, mood: moods.length ? moods.reduce((a,b)=>a+b,0)/moods.length : null, n: hs.length}; }
+const MOODS = ["😞","🙁","😐","🙂","😄"], RATES = ["😣","🙁","😐","🙂","🤩"];
+function recapCard(ws, dismiss){ const r = recapData(ws); if (!r.n || !r.ci) return "";
+  return `<div class="ritual"><div class="row between"><div><div class="eyebrow">Your week in review · ${fmt(r.ws)} – ${fmt(r.end)}</div><h2>${r.score >= 100 ? "A perfect week" : r.score >= 80 ? "A strong week" : r.score >= 55 ? "A decent week" : "A week to build on"}</h2></div><div class="big num" style="color:var(--accent)">${r.score}</div></div>
+    <div class="stat3"><div class="stat"><span class="k">Perfect days</span><span class="v">${r.pd} / 7</span></div><div class="stat"><span class="k">Check-ins</span><span class="v">${r.ci}</span></div><div class="stat"><span class="k">Mood</span><span class="v">${r.mood ? MOODS[Math.round(r.mood)-1] : "–"}</span></div></div>
+    <div class="small">${r.best && r.best.r > 0 ? `<div>Best: ${ico(r.best.h)} <b>${esc(r.best.h.name)}</b>${r.best.r >= 1 ? ", fully on target" : ` at ${Math.round(r.best.r*100)}%`}</div>` : ""}${r.top && r.top.st.cur > 1 ? `<div>Longest streak now: ${ico(r.top.h)} ${esc(r.top.h.name)}, 🔥 ${r.top.st.cur} ${r.top.st.unit === "d" ? "days" : r.top.st.unit}</div>` : ""}${r.fix ? `<div>Fix next: ${ico(r.fix.h)} <b>${esc(r.fix.h.name)}</b> at ${Math.round(r.fix.r*100)}%</div>` : ""}</div>
+    <div class="row">${canShare() ? `<button class="btn sm" data-act="recap-share" data-v="${key(ws)}">Share as image</button>` : ""}${dismiss ? `<span class="grow"></span><button class="btn sm primary" data-act="recap-close" data-v="${key(ws)}">Got it</button>` : ""}</div></div>`; }
+async function shareCard(opt){ const cv = document.createElement("canvas"), W = 1080, Ht = 1350; cv.width = W; cv.height = Ht; const g = cv.getContext("2d"), cs = getComputedStyle(document.documentElement), tok = v => cs.getPropertyValue(v).trim();
+  const bg = tok("--bg") || "#F3F5F8", sf = tok("--surface") || "#fff", ink = tok("--ink") || "#121722", mut = tok("--ink-3") || "#7C8697", acc = tok("--accent") || "#2B5BD7", F = 'system-ui,-apple-system,"Segoe UI",sans-serif';
+  g.fillStyle = bg; g.fillRect(0,0,W,Ht); g.fillStyle = sf; const rr = (x,y,w,h,r) => { g.beginPath(); g.roundRect ? g.roundRect(x,y,w,h,r) : g.rect(x,y,w,h); g.fill(); }; rr(60,60,W-120,Ht-120,48);
+  g.fillStyle = acc; g.font = `700 40px ${F}`; g.fillText("NEVER TWICE", 120, 170); g.fillStyle = mut; g.font = `500 34px ${F}`;
+  if (opt.kind === "badge") { const b = opt.b; g.font = `200px ${F}`; g.textAlign = "center"; g.fillText(b.icon, W/2, 620); g.fillStyle = ink; g.font = `700 64px ${F}`;
+    wrap(g, b.title, W/2, 760, W-260, 76); g.fillStyle = mut; g.font = `500 40px ${F}`; g.fillText(b.desc, W/2, 980); g.fillText(fmt(today(),{day:"numeric",month:"long",year:"numeric"}), W/2, 1060); }
+  else { const r = recapData(parse(opt.ws)); g.fillText(`Week of ${fmt(r.ws)} – ${fmt(r.end)}`, 120, 230); g.fillStyle = ink; g.font = `800 260px ${F}`; g.fillText(String(r.score), 110, 520); g.fillStyle = mut; g.font = `600 40px ${F}`; g.fillText("weekly score", 124, 580);
+    const rows = [["Perfect days", `${r.pd} / 7`], ["Check-ins", String(r.ci)], r.best ? ["Best habit", `${iconOf(r.best.h)} ${r.best.h.name}`] : null, r.top && r.top.st.cur > 1 ? ["Longest streak", `🔥 ${r.top.st.cur} · ${iconOf(r.top.h)} ${r.top.h.name}`] : null, r.mood ? ["Average mood", MOODS[Math.round(r.mood)-1]] : null].filter(Boolean);
+    rows.forEach(([k,v],i) => { const y = 720 + i*110; g.fillStyle = mut; g.font = `500 36px ${F}`; g.fillText(k, 124, y); g.fillStyle = ink; g.font = `700 44px ${F}`; g.fillText(v.length > 30 ? v.slice(0,29)+"…" : v, 124, y+54); }); }
+  g.textAlign = "left"; g.fillStyle = mut; g.font = `500 30px ${F}`; g.fillText("Miss a day if you have to. Never miss two.", 120, Ht-120);
+  const blob = await new Promise(r => cv.toBlob(r, "image/png")); if (!blob) return toast("Couldn't make the image.");
+  const file = new File([blob], `never-twice-${opt.kind}.png`, {type:"image/png"});
+  try { if (navigator.canShare && navigator.canShare({files:[file]})) { await navigator.share({files:[file], title:"Never Twice"}); return; } } catch(e) { if (e && e.name === "AbortError") return; }
+  const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = file.name; document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(a.href), 5000); toast("Image saved"); }
+function wrap(g, text, x, y, max, lh){ const words = String(text).split(" "); let line = "", yy = y; words.forEach(w => { const t = line ? line + " " + w : w; if (g.measureText(t).width > max && line) { g.fillText(line, x, yy); line = w; yy += lh; } else line = t; }); g.fillText(line, x, yy); }
+function vTrophies(){ const bs = badges(), got = bs.filter(b=>b.got), left = bs.filter(b=>!b.got).sort((a,b)=>b.have/b.need - a.have/a.need);
+  return `<div class="top"><div><div class="eyebrow">${got.length} of ${bs.length} earned</div><h1>🏆 Trophies</h1></div><button class="btn sm" data-act="trophies-close">Back</button></div>
+    <div class="card"><h2>Earned</h2>${got.length ? `<div class="trophies">${got.map(b=>`<div class="trophy"><span class="em" aria-hidden="true">${b.icon}</span><span>${esc(b.title)}</span>${canShare() ? `<button class="btn sm" data-act="badge-share" data-v="${esc(b.id)}">Share</button>` : ""}</div>`).join("")}</div>` : `<p class="muted small">None yet. Your first perfect day earns one.</p>`}</div>
+    <div class="card"><h2>Up next</h2>${left.slice(0,12).map(b=>`<div class="col" style="gap:5px"><div class="row between small"><span>${b.icon} ${esc(b.title)}</span><span class="num muted">${b.have}/${b.need}</span></div><div class="bar"><i style="width:${b.have/b.need*100}%"></i></div></div>`).join("") || `<p class="muted small">You've earned everything there is. Add a habit or a goal for more.</p>`}</div>
+    <div class="card"><h2>🛡️ Streak shields</h2><p class="small">${S.cfg.shields === false ? "Turned off in Settings." : `You have <b>${shieldState().have} of 2</b>. You earn one for every perfect week. When you miss a day on a daily habit that had a streak going, a shield is used up automatically and the streak survives.`}</p></div>`; }
 function vToday(){
   const c = S.cfg, t = today(), tk = key(t), k = S.date && S.date < tk ? S.date : tk, isToday = k === tk, dd = parse(k), d = day(k), ws = weekOf(dd), hs = habits().filter(h => k >= h.start), timer = getTimer();
   const score_ = weekScore(weekOf(t)), rings = habits().filter(h=>h.ring).slice(0,3), R = [55,41,27];
-  let due = hs.filter(h=>dueOn(h,k)); const rest = hs.filter(h=>!dueOn(h,k)), isFin = h => kept(h,k) || skipped(k,h.id), nDone = due.filter(isFin).length, total = due.length;
+  let due = hs.filter(h=>dueOn(h,k)); const rest = hs.filter(h=>!dueOn(h,k)), isFin = h => kept(h,k) || skipped(k,h.id), req = due.filter(h => mustToday(h,k)), nDone = req.filter(isFin).length, total = req.length;
+  if (d.must) due = [...due.filter(h => h.id === d.must), ...due.filter(h => h.id !== d.must)];
   let html = `<div class="top"><div><div class="eyebrow">${fmt(dd,{weekday:"long",day:"numeric",month:"long"})}</div><h1>${isToday?"Today":fmt(dd,{weekday:"long"})}</h1></div>
     <div class="row" style="gap:6px;justify-content:flex-end"><button class="btn sm" data-act="date" data-n="-1" aria-label="Previous day">‹</button>${isToday?"":`<button class="btn sm" data-act="date" data-n="0">Today</button><button class="btn sm" data-act="date" data-n="1" aria-label="Next day">›</button>`}</div></div>`;
   if (S.slow) html += `<div class="banner warn"><h3>Your data hasn't loaded yet</h3><div class="small">This may be out of date. It updates when the connection returns.</div></div>`;
   if (!isToday) html += `<div class="banner warn"><h3>Editing a past day</h3><div class="small">Changes here update your streaks and scores.</div></div>`;
   if (!habits().length) return html + `<div class="card"><h2>No habits yet</h2><p class="muted">Add your first habit to start tracking.</p><button class="btn primary" data-act="h-add">Add a habit</button></div>`;
-  const ms = isToday ? missed() : [];
+  const hour = new Date().getHours(), rv = +(c.reviewAt ?? 20), rit = c.rituals || {}, lastWs = addDays(weekOf(t), -7);
+  if (isToday && rit.weekly !== false && c.recapSeen !== key(lastWs) && habits().some(h => h.start <= key(addDays(lastWs,6)))) html += recapCard(lastWs, true);
+  if (isToday && rit.morning !== false && !d.planned && hour < rv && due.some(h => !isFin(h))) { const yp = day(key(addDays(t,-1))).prep;
+    html += `<div class="ritual"><div class="eyebrow">Morning plan</div><h2>${hour < 12 ? "Good morning." : "Plan the rest of your day."} ${total} habit${total===1?"":"s"} today${due.length > total ? `, plus ${due.length - total} optional` : ""}.</h2>
+      ${yp ? `<div class="ins"><b>You planned last night</b><span class="small">${esc(yp)}</span></div>` : ""}
+      <div class="small muted">Pick your one must-do. It goes to the top and gets a star.</div>
+      <div class="chips">${due.map(h => `<button class="chip" data-act="must" data-h="${h.id}" aria-pressed="${d.must === h.id}">${d.must === h.id ? "⭐ " : ""}${esc(iconOf(h))} ${esc(h.name)}</button>`).join("")}</div>
+      <button class="btn primary" data-act="planned">Let's go</button></div>`; }
+  if (isToday && rit.evening !== false && hour >= rv && !d.reviewed) { const left = req.filter(h => !isFin(h));
+    html += `<div class="ritual"><div class="eyebrow">🌙 Evening review</div><h2>${left.length ? `${nDone} of ${total} done. ${left.length} still open.` : "Everything done today."}</h2>
+      ${left.length ? `<div class="small">${left.map(h => `${esc(iconOf(h))} ${esc(h.name)}`).join(" · ")}</div><div class="note">There's still time for the small version. Or skip them from the list below if today wasn't the day.</div>` : ""}
+      <div class="f">How was today?<div class="emo" role="group">${RATES.map((m,i) => `<button data-act="rate" data-v="${i+1}" aria-pressed="${d.rating === i+1}" aria-label="Rate ${i+1} of 5">${m}</button>`).join("")}</div></div>
+      <label class="f">The first thing you'll do tomorrow<input type="text" id="prep" value="${esc(d.prep)}" placeholder="e.g. 30 min of chapter 4 at 8:30pm"></label>
+      <button class="btn primary" data-act="reviewed">Done for today</button></div>`; }
+  else if (isToday && d.reviewed) html += `<div class="card" style="flex-direction:row;align-items:center;gap:10px"><span style="font-size:22px" aria-hidden="true">🌙</span><div class="grow small">Reviewed${d.rating ? ` · ${RATES[d.rating-1]}` : ""}${d.prep ? ` · Tomorrow: ${esc(d.prep)}` : ""}</div><button class="btn sm" data-act="review-edit">Edit</button></div>`;
+  const ms = isToday ? missed() : [], saved = isToday ? habits().filter(h => shielded(h, key(addDays(t,-1)))) : [];
+  if (saved.length) html += `<div class="banner good"><h3>🛡️ A shield saved your streak</h3><div class="small">${saved.map(h => `${esc(iconOf(h))} ${esc(h.name)}`).join(", ")} missed yesterday, but the streak lives on. Earn shields back with perfect weeks.</div></div>`;
   if (ms.length) { const twice = ms.some(x=>x.twice);
     const rescue = ms.filter(x=>x.h.type!=="check" && deficit(x.h) > 0).map(x => { const per = Math.ceil(deficit(x.h)/3);
       return `<div class="small"><b>${esc(x.h.name)}</b>: behind by <span class="num">${fmtV(x.h,Math.ceil(deficit(x.h)))}</span> this week. Next 3 days: ${[0,1,2].map(i=>`<span class="num">${fmtV(x.h, Math.round(dayTarget(x.h,key(addDays(t,i))))+per)}</span>`).join(", ")}.</div>`; }).join("");
     html += `<div class="banner bad"><h3>${c.tone === "gentle" ? (twice ? "Two days missed. Today, do the smallest version." : "Yesterday slipped. Pick one and start small.") : (twice ? "Two misses in a row. This is the line." : "Missed yesterday. Today isn't optional.")}</h3>
       <div class="small">${ms.map(x=>esc(x.h.name)).join(", ")}</div>${rescue}${c.why ? `<div class="why">${esc(c.why)}</div>` : ""}</div>`; }
-  else if (isToday && total && nDone === total) html += `<div class="banner good"><h3>Everything due today is done.</h3><div class="small">${total} of ${total}. Set up tomorrow and stop here.</div></div>`;
-  if (isToday) html += `<div class="card"><div class="row between"><h2>This week</h2><div class="row" style="gap:6px">${(c.goals||[]).slice(0,1).map(g=>`<span class="pill num">${Math.max(0,goalStats(g).days)}d · ${esc(g.name)}</span>`).join("")}<span class="pill num ${score_>=80?"good":score_>=55?"warn":"bad"}">Score ${score_}</span></div></div>
+  else if (isToday && total && nDone === total) { const run = perfectRun(); html += `<div class="banner good"><h3>🎉 Day complete</h3><div class="small">${total} of ${total} done.${run > 1 ? ` ${run} perfect days in a row.` : ""} Set up tomorrow and stop here.</div></div>`; }
+  const weekCard = !isToday ? "" : `<div class="card"><div class="row between"><h2>This week</h2><div class="row" style="gap:6px">${c.shields !== false ? `<span class="pill num" title="Streak shields">🛡️ ${shieldState().have}</span>` : ""}<span class="pill num ${score_>=80?"good":score_>=55?"warn":"bad"}">Score ${score_}</span></div></div>
     ${rings.length ? `<div class="rings"><svg viewBox="0 0 132 132" width="132" height="132" role="img" aria-label="Weekly rings">${rings.map((h,i)=>ring(R[i],progress(h,ws),col(h))).join("")}</svg>
-    <div class="legend">${rings.map(h=>`<div><div class="k" style="color:${col(h)}">${esc(h.name)}</div><div class="v">${isMax(h)||h.type==="check" ? `${weekDone(h,ws)} / ${wtN(h)}` : h.type==="count" ? `${r1(weekDone(h,ws))} / ${fmtV(h,weekTarget(h))}` : `${fmtV(h,weekDone(h,ws))} / ${fmtV(h,weekTarget(h))}`}</div></div>`).join("")}</div></div>` : `<p class="note">Open a habit and turn on "Show as ring" for up to three habits to see them here.</p>`}</div>`;
+    <div class="legend">${rings.map(h=>`<div><div class="k" style="color:${col(h)}">${ico(h)} ${esc(h.name)}</div><div class="v">${isMax(h)||h.type==="check" ? `${weekDone(h,ws)} / ${wtN(h)}` : h.type==="count" ? `${r1(weekDone(h,ws))} / ${fmtV(h,weekTarget(h))}` : `${fmtV(h,weekDone(h,ws))} / ${fmtV(h,weekTarget(h))}`}</div></div>`).join("")}</div></div>` : `<p class="note">Open a habit and turn on "Show as ring" for up to three habits to see them here.</p>`}</div>`;
   if (c.hideDone) due = due.filter(h => !isFin(h));
   const yPrep = day(key(addDays(dd,-1))).prep; let list = "";
-  if (c.group !== false && due.some(h=>h.tod !== "any")) TOD.forEach(([id,label]) => { const g = due.filter(h=>h.tod===id); if (g.length) list += `<div class="grp">${label}</div>` + g.map(h=>habitRow(h,k,timer,isToday)).join(""); });
-  else list = due.map(h=>habitRow(h,k,timer,isToday)).join("");
+  const mustH = due.find(h => h.id === d.must), rest2 = due.filter(h => h !== mustH);
+  if (mustH) list += `<div class="grp">⭐ Must-do</div>` + habitRow(mustH,k,timer,isToday);
+  if (c.group !== false && rest2.some(h=>h.tod !== "any")) TOD.forEach(([id,label]) => { const g = rest2.filter(h=>h.tod===id); if (g.length) list += `<div class="grp">${label}</div>` + g.map(h=>habitRow(h,k,timer,isToday)).join(""); });
+  else list += rest2.map(h=>habitRow(h,k,timer,isToday)).join("");
   html += `<div class="card"><div class="row between"><h2>${isToday?"Due today":"Due that day"}</h2><span class="num small muted">${nDone}/${total}</span></div>
     <div class="bar"><i style="width:${total?nDone/total*100:0}%"></i></div>
-    ${yPrep && isToday ? `<div class="ins"><b>From last night</b><span class="small">${esc(yPrep)}</span></div>` : ""}
+    ${yPrep && isToday && d.planned ? `<div class="ins"><b>From last night</b><span class="small">${esc(yPrep)}</span></div>` : ""}
     ${c.focusGate && isToday && hs.some(h=>h.type==="time"&&!isMax(h)) ? tick("pa", d.pa, "Phone is in another room", "Unlocks the focus timer") : ""}
     <div>${list || `<p class="muted small">${total ? "All done. Nothing left to show." : "Nothing scheduled."}</p>`}</div>
     ${rest.length ? `<details><summary>Not due (${rest.length})</summary><div>${rest.map(h=>habitRow(h,k,timer,isToday)).join("")}</div></details>` : ""}
-    <div class="row between"><span class="note">Tap a ring to log. Tap a name for history, skip and edit.</span><button class="btn sm" data-act="h-add">Add a habit</button></div></div>`;
+    <div class="row between"><span class="note">Tap a ring to log. Tap a name for timers, skip and details.</span><button class="btn sm" data-act="h-add">Add a habit</button></div></div>`;
+  html += weekCard;
   const tr = c.track || {};
-  if (tr.sleep || tr.energy || tr.screen) html += `<div class="card"><h2>Daily log</h2>
-    ${tr.sleep ? `<label class="f">Slept last night <span class="num" id="sleepVal">${d.sleep!=null?h1(d.sleep)+" h":"not logged"}</span><input type="range" id="sleep" min="3" max="10" step="0.5" value="${d.sleep??7}"></label>` : ""}
+  if (tr.sleep || tr.energy || tr.screen || tr.mood !== false) html += `<div class="card"><h2>Daily log</h2>
+    ${tr.mood !== false ? `<div class="f">Mood<div class="emo" role="group">${MOODS.map((m,i) => `<button data-act="mood" data-v="${i+1}" aria-pressed="${d.mood === i+1}" aria-label="Mood ${i+1} of 5">${m}</button>`).join("")}</div></div>` : ""}
+    ${tr.sleep ? `<label class="f">Slept last night <span class="num" id="sleepVal">${d.sleep!=null ? h1(d.sleep)+" h" : "not logged yet. Drag to log."}</span><input type="range" id="sleep" class="${d.sleep==null?"input-unset":""}" min="3" max="10" step="0.5" value="${d.sleep??7}"></label>` : ""}
     ${tr.energy ? `<div class="f">Energy${seg("energy", [1,2,3,4,5].map(n=>[n,n]), d.energy)}</div>` : ""}
     ${tr.screen ? `<label class="f">Phone screen time (hours)<input type="number" id="screen" inputmode="decimal" step="0.1" min="0" max="24" value="${d.screen??""}" placeholder="e.g. 3.5"></label>` : ""}</div>`;
   const e = c.earn || {};
@@ -591,9 +793,7 @@ function vToday(){
       ${any ? "" : `<p class="note">Add conditions in Settings.</p>`}
       ${tick("eu", d.eu, `I'm taking it ${isToday?"today":"this day"}`, d.eu && !ok && any ? "Logged as not earned" : "")}</div>`; }
   if ((c.rules||[]).length) html += `<div class="card"><details><summary>If-then rules (${c.rules.length})</summary><ul>${c.rules.map(r=>`<li>${esc(r)}</li>`).join("")}</ul></details></div>`;
-  if (isToday) html += `<div class="card"><div class="row between"><h2>Prep for tomorrow</h2><span class="note">1 minute, before bed</span></div>
-    <label class="f">The first thing you'll do tomorrow<input type="text" id="prep" value="${esc(d.prep)}" placeholder="e.g. 30 min of chapter 4 at 8:30pm"></label></div>
-    <div class="card"><div class="row between"><h2>Coach</h2><span class="note">Numbers first</span></div><ul class="lines">${verdict().map(l=>`<li>${esc(l)}</li>`).join("")}</ul></div>`;
+  if (isToday) html += `<div class="card"><div class="row between"><h2>Coach</h2><span class="note">Numbers first</span></div><ul class="lines">${verdict().map(l=>`<li>${esc(l)}</li>`).join("")}</ul></div>`;
   return html;
 }
 
@@ -602,6 +802,7 @@ function editor(h){
   const a = `data-h="${h.id}"`, s = h.sch, numeric = h.type !== "check";
   return `<div class="card" style="--hc:${col(h)}"><h2>Edit habit</h2>
     <label class="f">Name<input type="text" ${a} data-f="name" value="${esc(h.name)}"></label>
+    ${iconPicker(h, "")}
     <label class="f">Question or prompt (optional)<input type="text" ${a} data-f="q" value="${esc(h.q)}" placeholder="e.g. Did you stretch after training?"></label>
     <div class="f">How you track it${seg("h-type", [["check","Done / not"],["time","Minutes"],["count","A number"]], h.type, a)}</div>
     ${numeric ? `<div class="f">The goal is${seg("h-dir", [["min","At least"],["max","At most"]], h.dir, a)}</div>
@@ -636,7 +837,7 @@ function calendar(h){
 }
 function vDetail(h){
   const st = streaks(h), ser = scoreSeries(h), sc = score(h), tot = totals(h), c = col(h), t = today(), tk = key(t);
-  let html = `<div class="top"><div style="min-width:0"><div class="eyebrow">${esc(schedLabel(h))}${h.archived?" · archived":""}</div><h1 style="overflow-wrap:anywhere">${esc(h.name)}</h1></div><button class="btn sm" data-act="detail-close">Back</button></div>`;
+  let html = `<div class="top"><div style="min-width:0"><div class="eyebrow">${esc(schedLabel(h))}${h.archived?" · archived":""}</div><h1 style="overflow-wrap:anywhere">${ico(h)} ${esc(h.name)}</h1></div><button class="btn sm" data-act="detail-close">Back</button></div>`;
   if (S.edit) return html + editor(h);
   if (h.desc) html += `<p class="muted">${esc(h.desc)}</p>`;
   html += `<div class="row"><button class="btn sm primary" data-act="edit">Edit habit</button>${h.archived ? "" : `<button class="btn sm" data-act="skip-today" data-h="${h.id}">${skipped(tk,h.id)?"Undo today's skip":"Skip today"}</button>`}</div>`;
@@ -663,7 +864,7 @@ function vAdd(){
   return `<div class="top"><div><div class="eyebrow">Habit library</div><h1>Add a habit</h1></div><button class="btn sm" data-act="add-close">Back</button></div>
     <div class="row"><button class="btn primary grow" data-act="lib" data-v="">Create your own</button>${S.setup ? "" : `<button class="btn grow" data-act="retpl">Add whole templates</button>`}</div>
     <p class="muted small">Or pick one below. Each opens ready to edit, so you can change the name, target and schedule.</p>
-    ${Object.entries(LIB).map(([cat,list]) => `<div class="card"><h2>${cat}</h2><div class="chips">${list.map(p=>`<button class="chip ${have.has(p.name)?"added":""}" data-act="lib" data-v="${esc(p.name)}">${esc(p.name)}</button>`).join("")}</div></div>`).join("")}`;
+    ${Object.entries(LIB).map(([cat,list]) => `<div class="card"><h2>${cat}</h2><div class="chips">${list.map(p=>`<button class="chip ${have.has(p.name)?"added":""}" data-act="lib" data-v="${esc(p.name)}">${esc(p.icon)} ${esc(p.name)}</button>`).join("")}</div></div>`).join("")}`;
 }
 
 /* ---------- goals ---------- */
@@ -697,28 +898,32 @@ function vInsights(){
   const hs = habits(), t = today(), tk = key(t);
   let html = `<div class="top"><div><div class="eyebrow">What the data says</div><h1>Insights</h1></div></div>`;
   if (!hs.length) return html + `<div class="card"><h2>Nothing to show yet</h2><p class="muted">Add habits and log a few days.</p></div>`;
+  const bs = badges(), gotN = bs.filter(b=>b.got).length, nxt = bs.filter(b=>!b.got).sort((a,b)=>b.have/b.need - a.have/a.need)[0];
+  html += `<div class="card"><div class="row between"><h2>🏆 Trophies</h2><button class="btn sm" data-act="trophies">See all</button></div><div class="row between small"><span><b>${gotN}</b> of ${bs.length} earned · 🛡️ ${shieldState().have} shield${shieldState().have===1?"":"s"}</span>${nxt ? `<span class="muted">Next: ${nxt.icon} ${nxt.have}/${nxt.need}</span>` : ""}</div>${nxt ? `<div class="bar"><i style="width:${nxt.have/nxt.need*100}%"></i></div><div class="note">${esc(nxt.title)}</div>` : ""}</div>`;
   const days7 = []; for (let i=6;i>=0;i--) days7.push(addDays(t,-i));
   html += `<div class="card"><div class="row between"><h2>Last 7 days</h2><span class="note">Tap a habit for its full history</span></div><div class="grid7"><div></div>${days7.map(d=>`<div class="hd">${DOW[dowIdx(d)][0]}</div>`).join("")}
-    ${hs.map(h => `<button class="nm" data-act="detail" data-h="${h.id}">${esc(h.name)}</button>` + days7.map(d => { const k = key(d), f = k < h.start ? 0 : frac(h,k); return `<div class="cell" style="--hc:${col(h)}" title="${k}">${skipped(k,h.id) ? "–" : f > 0 ? `<i style="opacity:${Math.max(.3,f)}"></i>` : ""}</div>`; }).join("")).join("")}</div></div>`;
+    ${hs.map(h => `<button class="nm" data-act="detail" data-h="${h.id}">${ico(h)} ${esc(h.name)}</button>` + days7.map(d => { const k = key(d), f = k < h.start ? 0 : frac(h,k); return `<div class="cell" style="--hc:${col(h)}" title="${k}">${skipped(k,h.id) ? "–" : f > 0 ? `<i style="opacity:${Math.max(.3,f)}"></i>` : ""}</div>`; }).join("")).join("")}</div></div>`;
   const ranked = hs.map(h=>({h, s:score(h), st:streaks(h)})).sort((a,b)=>b.s-a.s);
-  html += `<div class="card"><div class="row between"><h2>Habit strength</h2><span class="note">Strongest first</span></div>${ranked.map(x=>`<div class="col" style="gap:5px;--hc:${col(x.h)}"><div class="row between small"><button class="link" style="font-size:13px" data-act="detail" data-h="${x.h.id}">${esc(x.h.name)}</button><span class="num">${Math.round(x.s*100)}%${x.st.cur?` · ${x.st.cur} ${x.st.unit}`:""}</span></div><div class="bar"><i style="width:${x.s*100}%"></i></div></div>`).join("")}</div>`;
+  html += `<div class="card"><div class="row between"><h2>Habit strength</h2><span class="note">Strongest first</span></div>${ranked.map(x=>`<div class="col" style="gap:5px;--hc:${col(x.h)}"><div class="row between small"><button class="link" style="font-size:13px" data-act="detail" data-h="${x.h.id}">${ico(x.h)} ${esc(x.h.name)}</button><span class="num">${Math.round(x.s*100)}%${x.st.cur?` · ${x.st.cur} ${x.st.unit}`:""}</span></div><div class="bar"><i style="width:${x.s*100}%"></i></div></div>`).join("")}</div>`;
   const W = 320, Ht = 120, n = 12, bw = W/n; let bars = "";
   for (let i=n-1;i>=0;i--){ const ws = addDays(weekOf(t), -7*i), end = key(addDays(ws,6)) > tk ? tk : key(addDays(ws,6)); const live = hs.filter(h => h.start <= end);
-    const sc = live.length ? live.reduce((a,h)=>{ const e = expected(h,ws,end); return a + (e>0 ? Math.min(1,weekDone(h,ws,end)/e) : 1); },0)/live.length : 0, x = (n-1-i)*bw, hh = sc*(Ht-34);
+    const sc = live.length ? weekScore(ws)/100 : 0, x = (n-1-i)*bw, hh = sc*(Ht-34);
     bars += `<rect x="${x+3}" y="${Ht-20-hh}" width="${bw-6}" height="${hh}" rx="3" fill="var(--accent)" fill-opacity="${i?".55":"1"}"/>${live.length?`<text class="svgtext" x="${x+bw/2}" y="${Ht-24-hh}" text-anchor="middle">${Math.round(sc*100)}</text>`:""}${i%3===0?`<text class="svgtext" x="${x+bw/2}" y="${Ht-6}" text-anchor="middle">${fmt(ws)}</text>`:""}`; }
   html += `<div class="card"><div class="row between"><h2>Weekly score</h2><span class="note">Last 12 weeks</span></div><svg class="chart" viewBox="0 0 ${W} ${Ht}" role="img" aria-label="Weekly score for the last 12 weeks">${bars}</svg></div>`;
   const dk = Object.values(S.months).flatMap(m => Object.keys(m.d||{})).filter(k => k <= tk);
   const timeHs = hs.filter(x=>x.type==="time"&&!isMax(x)), metric = k => timeHs.length ? timeHs.reduce((a,x)=>a+val(k,x.id),0) : hs.filter(x=>kept(x,k)).length, mu = timeHs.length ? "min of timed habits" : "habits kept";
   const avg = a => a.reduce((x,y)=>x+y,0)/a.length;
   const cmp = (title,a,b,la,lb) => a.length < 3 || b.length < 3 ? `<div class="ins"><b>${title}</b><span class="note">Needs 3 or more days in each group (${a.length} and ${b.length} so far).</span></div>`
-    : `<div class="ins"><b>${title}</b><span class="small">${la}: <span class="num">${h1(avg(a))}</span> ${mu} on average. ${lb}: <span class="num">${h1(avg(b))}</span>.</span></div>`;
+    : `<div class="ins"><b>${title}</b><span class="small">${la}: <span class="num">${Math.round(avg(a)*10)/10}</span> ${mu} on average. ${lb}: <span class="num">${Math.round(avg(b)*10)/10}</span>.</span></div>`;
   const tr = S.cfg.track || {}, parts = [];
+  if (tr.mood !== false) { const s = dk.filter(k=>day(k).mood); parts.push(cmp("Mood", s.filter(k=>day(k).mood>=4).map(metric), s.filter(k=>day(k).mood<=3).map(metric), "Good mood days 🙂", "Lower mood days")); }
   if (tr.sleep) { const s = dk.filter(k=>day(k).sleep!=null); parts.push(cmp("Sleep", s.filter(k=>day(k).sleep>=7).map(metric), s.filter(k=>day(k).sleep<7).map(metric), "7 h or more", "Under 7 h")); }
   if (tr.energy) { const s = dk.filter(k=>day(k).energy!=null); parts.push(cmp("Energy", s.filter(k=>day(k).energy>=4).map(metric), s.filter(k=>day(k).energy<=3).map(metric), "Energy 4–5", "Energy 1–3")); }
   if (tr.screen) { const s = dk.filter(k=>day(k).screen!=null), v = s.map(k=>+day(k).screen).sort((a,b)=>a-b), med = v.length ? v[Math.floor(v.length/2)] : 0; parts.push(cmp("Screen time", s.filter(k=>+day(k).screen<=med).map(metric), s.filter(k=>+day(k).screen>med).map(metric), `${h1(med)} h or less`, "More than that")); }
   if (S.cfg.earn?.on) { const after = dk.filter(k=>day(key(addDays(parse(k),-1))).eu), other = dk.filter(k=>!day(key(addDays(parse(k),-1))).eu); parts.push(cmp(`Day after "${esc(S.cfg.earn.label)}"`, after.map(metric), other.map(metric), "The day after", "Other days")); }
   const wkd = dk.filter(k=>dowIdx(parse(k))<5), wke = dk.filter(k=>dowIdx(parse(k))>=5); parts.push(cmp("Weekdays and weekends", wkd.map(metric), wke.map(metric), "Weekdays", "Weekends"));
   html += `<div class="card"><h2>Patterns</h2>${parts.join("")}</div>`;
+  html += recapCard(addDays(weekOf(t),-7), false);
   return html;
 }
 
@@ -728,7 +933,7 @@ function vHabits(){
   let html = `<div class="top"><div><div class="eyebrow">Make it yours</div><h1>Habits</h1></div><div class="row" style="gap:6px;justify-content:flex-end"><button class="btn sm" data-act="retpl">Add templates</button><button class="btn sm primary" data-act="h-add">Add habit</button></div></div>
     <p class="muted small">Change targets right here. Edit opens everything else: name, schedule, units, timers, colour, time of day.</p>`;
   if (!act.length) html += `<div class="card"><h2>No habits yet</h2><p class="muted">Add one from the library, or load a template from Settings.</p></div>`;
-  act.forEach((h,i) => { html += `<div class="card" style="--hc:${col(h)}"><div class="row between" style="flex-wrap:nowrap"><div class="row" style="gap:8px;min-width:0;flex-wrap:nowrap"><span class="dot"></span><button class="link" style="font-size:17px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" data-act="detail" data-h="${h.id}">${esc(h.name)}</button></div>
+  act.forEach((h,i) => { html += `<div class="card" style="--hc:${col(h)}"><div class="row between" style="flex-wrap:nowrap"><div class="row" style="gap:8px;min-width:0;flex-wrap:nowrap"><span class="dot"></span><button class="link" style="font-size:17px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" data-act="detail" data-h="${h.id}">${ico(h)} ${esc(h.name)}</button></div>
       <div class="row" style="gap:6px;flex-wrap:nowrap"><button class="btn sm" data-act="h-move" data-h="${h.id}" data-n="-1" ${i===0?"disabled":""} aria-label="Move up">↑</button><button class="btn sm" data-act="h-move" data-h="${h.id}" data-n="1" ${i===act.length-1?"disabled":""} aria-label="Move down">↓</button><button class="btn sm primary" data-act="h-edit" data-h="${h.id}">Edit</button></div></div>
       <div class="note">${esc(schedLabel(h))}${h.tod!=="any"?" · "+h.tod:""}${h.ring?" · shown as ring":""} · strength ${Math.round(score(h)*100)}%</div>${quickFields(h,"list")}</div>`; });
   if (arch.length) html += `<div class="card"><h2>Archived</h2>${arch.map(h=>`<div class="row between"><button class="link" data-act="detail" data-h="${h.id}">${esc(h.name)}</button><button class="btn sm" data-act="h-arch" data-h="${h.id}">Restore</button></div>`).join("")}</div>`;
@@ -745,11 +950,18 @@ function vSettings(){
     ${S.standalone ? `<div class="f">Light or dark${seg("theme", [["auto","Match phone"],["light","Light"],["dark","Dark"]], c.theme || "auto")}</div>` : `<p class="note">Light and dark follow your Claude appearance setting.</p>`}</div>`;
   html += `<div class="card"><h2>Your why</h2><label class="f">One or two lines in your own words. Shown when you miss a day.<textarea id="why" placeholder="Why does this matter to you?">${esc(c.why)}</textarea></label></div>`;
   html += `<div class="card"><h2>Coach tone</h2>${seg("tone", [["blunt","Blunt"],["gentle","Gentle"]], c.tone === "gentle" ? "gentle" : "blunt")}<p class="note">Changes how the app talks to you when you miss a day.</p></div>`;
+  const rit = c.rituals || {};
+  html += `<div class="card"><h2>Daily rituals</h2>${tick("rit", rit.morning !== false, "Morning plan", "Pick your must-do when you first open the app", 'data-v="morning"')}${tick("rit", rit.evening !== false, "Evening review", "Rate the day and set tomorrow's first task", 'data-v="evening"')}
+    ${rit.evening !== false ? `<label class="f">Evening review appears from<select id="reviewAt">${[17,18,19,20,21,22,23].map(n=>`<option value="${n}" ${+(c.reviewAt ?? 20)===n?"selected":""}>${n}:00</option>`).join("")}</select></label>` : ""}
+    ${tick("rit", rit.weekly !== false, "Weekly recap", "Last week's score, best habit and what to fix, at the start of each week", 'data-v="weekly"')}</div>`;
+  html += `<div class="card"><h2>Rewards</h2>${tick("set", c.anim !== false, "Celebrations", "Animation and confetti when you finish a habit or a whole day", 'data-v="anim"')}${tick("set", c.vibe !== false, "Vibration", "A short buzz on your phone with each celebration", 'data-v="vibe"')}
+    ${tick("set", c.shields !== false, "Streak shields", `Earn one per perfect week, hold up to 2. One is used automatically to save a streak on a missed day. You have ${shieldState().have}.`, 'data-v="shields"')}
+    <button class="btn sm" data-act="trophies">🏆 See trophies</button></div>`;
   html += `<div class="card"><h2>Today screen</h2>${tick("set", c.group !== false, "Group habits by time of day", "Morning, afternoon, evening", 'data-v="group"')}${tick("set", c.hideDone, "Hide finished habits", "Done and skipped habits drop off the list", 'data-v="hideDone"')}</div>`;
   html += `<div class="card"><h2>How days and weeks count</h2><div class="f">Week starts on${seg("ws", [["mon","Monday"],["sun","Sunday"]], c.ws || "mon")}</div>
     <label class="f">A new day starts at<select id="roll">${[0,1,2,3,4,5].map(n=>`<option value="${n}" ${(+c.roll||0)===n?"selected":""}>${n===0?"Midnight":n+" am"}</option>`).join("")}</select></label><p class="note">Set this later if you're often up past midnight, so late-night logging counts for the day before.</p>
     ${tick("set", c.tiny !== false, "Small starts keep the streak", "10 minutes of a timed habit keeps its streak alive, even if you miss the full target", 'data-v="tiny"')}</div>`;
-  html += `<div class="card"><h2>Daily log</h2>${tick("tr", tr.sleep, "Sleep hours", "", 'data-v="sleep"')}${tick("tr", tr.energy, "Energy (1–5)", "", 'data-v="energy"')}${tick("tr", tr.screen, "Phone screen time", "", 'data-v="screen"')}</div>`;
+  html += `<div class="card"><h2>Daily log</h2>${tick("tr", tr.sleep, "Sleep hours", "", 'data-v="sleep"')}${tick("tr", tr.energy, "Energy (1–5)", "", 'data-v="energy"')}${tick("tr", tr.screen, "Phone screen time", "", 'data-v="screen"')}${tick("tr", tr.mood !== false, "Mood", "", 'data-v="mood"')}</div>`;
   html += `<div class="card"><h2>Focus timer</h2>${tick("set", c.focusGate, "Phone away before starting", "The timer stays locked until you confirm your phone is in another room", 'data-v="focusGate"')}<p class="note">Timer lengths are set per habit, in its Edit screen.</p></div>`;
   html += `<div class="card"><h2>Earn-it rule</h2>${tick("earn-on", e.on, "Use an earn-it rule", "A treat you only take when the week's work is done")}
     ${e.on ? `<label class="f">What you're earning<input type="text" id="earnLabel" value="${esc(e.label)}" placeholder="e.g. Night out, takeaway, gaming"></label>
@@ -762,7 +974,22 @@ function vSettings(){
     <p class="note">Importing replaces everything on this device.</p></div>`;
   html += `<div class="card"><h2>Install on your phone</h2><ul class="lines small"><li><b>iPhone:</b> open this page in Safari, tap Share, then "Add to Home Screen".</li><li><b>Android:</b> open it in Chrome, tap the menu, then "Install app" or "Add to Home screen".</li></ul><p class="note">Once installed it opens full screen and works offline.</p></div>`;
   html += `<div class="card"><h2>Templates</h2><p class="note">Add one or more templates to the habits you have, or replace your list with a new set. Logged days are kept either way.</p><button class="btn sm" data-act="retpl">Browse templates</button></div>`;
+  html += `<div class="card"><h2>Start from scratch</h2><p class="note">Erases every habit, goal, setting and logged day ${S.signedIn ? "on this device, signs you out, and takes you back to the first screen. Your account's copy is kept, so signing in again brings it back. To remove that too, use Delete my cloud data first." : "and takes you back to the first screen. This can't be undone, so export a backup first if you might want it."}</p>
+    <button class="btn sm danger" data-act="reset">${S.confirm === "reset" ? "Tap again to erase everything" : "Reset the app"}</button></div>`;
   return html;
+}
+
+/* ---------- reset ---------- */
+async function resetAll(){
+  Object.keys(timers).forEach(id => clearTimeout(timers[id])); Object.keys(dirty).forEach(id => delete dirty[id]);
+  if (S.beforeReset) { try { await S.beforeReset(); } catch(e){} }
+  const ids = ["config", ...Object.keys(S.months).map(ym => "m-" + ym)];
+  if (S.mode === "db" && S.base) { for (const id of ids) { try { await S.base.doc(id).delete(); } catch(e){} } }
+  try { Object.keys(localStorage).filter(k => k.startsWith("nt_") && k !== "nt_session").forEach(k => localStorage.removeItem(k)); } catch(e){}
+  Object.assign(S, {cfg:null, months:{}, _timer:null, tab:"today", date:null, detail:null, edit:false, adding:false, setup:null, onboarding:false, gallery:false, pick:{}, cal:null, calDay:null, editG:null, confirm:null, trophies:false, open:null});
+  S.ob = typeof newOb === "function" ? newOb() : null;
+  document.documentElement.style.removeProperty("--accent"); document.documentElement.style.removeProperty("--bg");
+  render(); window.scrollTo(0,0); toast("Everything erased. Starting fresh.");
 }
 
 /* ---------- render ---------- */
@@ -776,30 +1003,37 @@ const TABS = [
 let pending = false, lastView = "";
 function render(){
   const ae = document.activeElement;
-  if (ae && ae.closest && ae.closest("#app") && ae.matches("input[type=text],input[type=number],input[type=date],input[type=time],input[type=email],textarea")) { pending = true; return; }
+  if (ae && ae.closest && ae.closest("#app") && ae.matches("input[type=text],input[type=number],input[type=date],input[type=time],input[type=email],input[type=password],textarea")) { pending = true; return; }
+  if (S.inChange && S.pd) { pending = true; return; }
   pending = false; S.memo = {};
   const app = document.getElementById("app"), bar = document.getElementById("tabbar");
   if (S.mode === "loading") { if (S.slow) app.innerHTML = `<div class="card"><div class="eyebrow">Still loading</div><h2>Can't reach your data yet</h2><p class="muted small">This page keeps trying. Check your connection.</p></div>`; return; }
   applySkin();
   const dh = S.detail ? hab(S.detail) : null;
-  const view = S.adding ? "add" : (S.onboarding || (!S.cfg && !S.setup)) ? "onboard" : S.setup ? "setup" : dh ? "detail:"+dh.id+(S.edit?":e":"") : S.tab;
+  if (S.cfg && !S.cfg.shieldStart) { S.cfg.shieldStart = key(today()); queueWrite("config", () => S.cfg); }
+  const view = S.adding ? "add" : (S.onboarding || (!S.cfg && !S.setup)) ? "onboard" : S.setup ? "setup" : dh ? "detail:"+dh.id+(S.edit?":e":"") : S.trophies ? "trophies" : S.tab;
   if (view === "onboard" && !S.ob && !S.cfg && !S.setup && !S.gallery) S.ob = newOb();
   const vkey = view === "onboard" && S.ob ? "swipe:" + S.ob.step : view;
   bar.hidden = view === "onboard" || view === "setup" || view === "add";
   document.getElementById("tabs").innerHTML = TABS.map(t=>`<button data-tab="${t.id}" ${S.tab===t.id&&!dh?'aria-current="page"':""}><svg viewBox="0 0 24 24" aria-hidden="true">${t.icon}</svg>${t.label}</button>`).join("");
   const y = window.scrollY;
-  app.innerHTML = view === "add" ? vAdd() : view === "setup" ? vSetup() : view === "onboard" ? (S.ob ? vSwipe() : vOnboard()) : dh ? vDetail(dh) : ({today:vToday, goals:vGoals, insights:vInsights, habits:vHabits, settings:vSettings}[S.tab] || vToday)();
+  app.innerHTML = view === "trophies" ? vTrophies() : view === "add" ? vAdd() : view === "setup" ? vSetup() : view === "onboard" ? (S.ob ? vSwipe() : vOnboard()) : dh ? vDetail(dh) : ({today:vToday, goals:vGoals, insights:vInsights, habits:vHabits, settings:vSettings}[S.tab] || vToday)();
   window.scrollTo(0, vkey === lastView ? y : 0); lastView = vkey;
+  if (S.cfg && TABS.some(t => t.id === view)) setTimeout(checkBadges, 300);
   const t = getTimer(), el = document.getElementById("timerDisplay"); if (t && el) { const left = Math.max(0, t.dur*60 - Math.floor((Date.now()-t.start)/1000)); el.textContent = `${pad(Math.floor(left/60))}:${pad(left%60)}`; }
 }
 document.addEventListener("focusout", () => setTimeout(() => { if (pending) render(); }, 0));
-const go = tab => { S.tab = tab; S.detail = null; S.edit = false; try { localStorage.setItem("nt_tab", tab); } catch(e){} render(); };
+document.addEventListener("pointerdown", () => { S.pd = true; }, true);
+document.addEventListener("pointerup", () => setTimeout(() => { S.pd = false; if (pending) render(); }, 0), true);
+document.addEventListener("pointercancel", () => { S.pd = false; }, true);
+document.getElementById("app").addEventListener("change", () => { S.inChange = true; }, true);
+const go = tab => { S.tab = tab; S.detail = null; S.edit = false; S.trophies = false; try { localStorage.setItem("nt_tab", tab); } catch(e){} render(); };
 document.getElementById("tabs").addEventListener("click", e => { const b = e.target.closest("[data-tab]"); if (b) go(b.dataset.tab); });
 
 /* ---------- swipe gestures ---------- */
 let drag = null;
 const appEl = document.getElementById("app");
-appEl.addEventListener("pointerdown", e => { const c = e.target.closest("#swipeCard"); if (!c || (e.button !== undefined && e.button > 0)) return; drag = {x:e.clientX, y:e.clientY, dx:0, el:c, id:e.pointerId, locked:false}; c.classList.remove("fly"); });
+appEl.addEventListener("pointerdown", e => { const c = e.target.closest("#swipeCard"); if (!c || e.target.closest("button,input,select") || (e.button !== undefined && e.button > 0)) return; drag = {x:e.clientX, y:e.clientY, dx:0, el:c, id:e.pointerId, locked:false}; c.classList.remove("fly"); });
 appEl.addEventListener("pointermove", e => { if (!drag || e.pointerId !== drag.id) return; const dx = e.clientX - drag.x, dy = e.clientY - drag.y;
   if (!drag.locked) { if (Math.abs(dx) < 8) return; if (Math.abs(dy) > Math.abs(dx)) { drag = null; return; } drag.locked = true; try { drag.el.setPointerCapture(e.pointerId); } catch(_){} }
   drag.dx = dx; drag.el.style.transform = `translateX(${dx}px) rotate(${dx/20}deg)`;
@@ -810,13 +1044,16 @@ appEl.addEventListener("pointerup", endDrag); appEl.addEventListener("pointercan
 document.addEventListener("keydown", e => { if (!S.ob || S.ob.step === "pace" || !document.getElementById("swipeCard") || e.target.matches("input,textarea,select")) return; if (e.key === "ArrowRight") obFly(1); else if (e.key === "ArrowLeft") obFly(-1); });
 
 /* ---------- events ---------- */
-const findH = (id, where) => where === "setup" ? S.setup?.habits.find(h=>h.id===id) : hab(id);
+const findH = (id) => hab(id) || S.setup?.habits.find(h=>h.id===id) || S.ob?.all?.find(h=>h.id===id);
+const saved = h => !!h && allHabits().includes(h);
+const upd = h => saved(h) ? saveCfg() : render();
 const setSch = (h,k) => { h.sch = k === "daily" ? {k} : k === "days" ? {k, days:(h.sch.days && h.sch.days.length ? h.sch.days : WK.slice())} : {k, n: k === "week" ? Math.min(7, h.sch.n||3) : k === "month" ? (h.sch.n||4) : Math.max(2, h.sch.n||2)}; };
+document.getElementById("app").addEventListener("click", e => { const sm = e.target.closest("summary[data-more]"); if (sm) S.more = S.more === sm.dataset.more ? null : sm.dataset.more; });
 document.getElementById("app").addEventListener("click", e => {
   const b = e.target.closest("[data-act]"); if (!b) return;
   const a = b.dataset.act, c = S.cfg, tk = key(today()), k = S.date && S.date < tk ? S.date : tk, d = day(k), n = +b.dataset.n, v = b.dataset.v;
-  const h = b.dataset.h ? (a.startsWith("setup") ? findH(b.dataset.h,"setup") : hab(b.dataset.h)) : null;
-  if (a !== "h-del" && a !== "g-del") S.confirm = null;
+  const h = b.dataset.h ? findH(b.dataset.h) : null;
+  if (a !== "h-del" && a !== "g-del" && a !== "reset") S.confirm = null;
   switch (a) {
     case "sw-yes": obFly(1); break;
     case "sw-no": obFly(-1); break;
@@ -826,11 +1063,12 @@ document.getElementById("app").addEventListener("click", e => {
     case "sw-gallery": S.ob = null; S.gallery = true; S.pick = {}; render(); break;
     case "sw-start": S.gallery = false; S.ob = newOb(); render(); break;
     case "tone": c.tone = v; saveCfg(); break;
+    case "reset": if (S.confirm !== "reset") { S.confirm = "reset"; render(); break; } S.confirm = null; resetAll(); break;
     case "tpl-toggle": S.pick = {...(S.pick||{}), [v]: !(S.pick||{})[v]}; render(); break;
     case "tpl-next": case "tpl-blank": { const su = S.setup || {tpls:[], habits:[], on:{}, mode: c && habits().length ? "add" : "replace"};
       if (a === "tpl-blank") su.tpls.push("blank");
-      else Object.keys(S.pick||{}).filter(x=>S.pick[x]).forEach(id => { su.tpls.push(id); tplHabits(id).forEach(x => { if (!su.habits.some(y=>y.name===x.name)) { su.habits.push(x); su.on[x.id] = true; } }); });
-      S.setup = su; S.pick = {}; S.onboarding = false; S.ob = null; S.gallery = false; render(); break; }
+      else Object.keys(S.pick||{}).filter(x=>S.pick[x]).forEach(id => { su.tpls.push(id); const dr = (S.tdrop||{})[id] || {}; tplHabits(id).filter(x => !dr[x.name]).forEach(x => { if (!su.habits.some(y=>y.name===x.name)) { su.habits.push(x); su.on[x.id] = true; } }); });
+      S.setup = su; S.pick = {}; S.tdrop = {}; S.onboarding = false; S.ob = null; S.gallery = false; render(); break; }
     case "tpl-cancel": S.onboarding = false; S.pick = {}; S.ob = null; S.gallery = false; render(); break;
     case "retpl": S.adding = false; S.onboarding = true; S.pick = {}; S.ob = S.setup ? null : newOb(); render(); break;
     case "setup-more": S.onboarding = true; S.pick = {}; S.ob = null; render(); break;
@@ -854,10 +1092,24 @@ document.getElementById("app").addEventListener("click", e => {
     case "edit-done": S.edit = false; render(); break;
     case "h-edit": S.detail = b.dataset.h; S.edit = true; render(); break;
     case "date": S.date = n === 0 ? null : key(addDays(parse(k), n)); if (S.date >= tk) S.date = null; render(); break;
-    case "check": setEnt(k, h.id, ent(k,h.id) ? undefined : 1); break;
-    case "zero": setEnt(k, h.id, 0); break;
-    case "add": { const nv = Math.max(0, r1(val(k,h.id) + n)); setEnt(k, h.id, nv === 0 && !isMax(h) ? undefined : nv); break; }
-    case "skip-today": setMap(tk, "s", h.id, !skipped(tk,h.id)); break;
+    case "check": logAction(h, k, () => setEnt(k, h.id, ent(k,h.id) ? undefined : 1), true); break;
+    case "zero": logAction(h, k, () => setEnt(k, h.id, 0), true); break;
+    case "add": { const nv = Math.max(0, r1(val(k,h.id) + n)); logAction(h, k, () => setEnt(k, h.id, nv === 0 && !isMax(h) ? undefined : nv)); break; }
+    case "skip-today": logAction(h, tk, () => setMap(tk, "s", h.id, !skipped(tk,h.id)), true); break;
+    case "skip": logAction(h, k, () => setMap(k, "s", h.id, !skipped(k,h.id)), true); break;
+    case "hopen": S.open = S.open === h.id ? null : h.id; render(); break;
+    case "must": saveDay(k, {must: d.must === h.id ? null : h.id}); break;
+    case "planned": saveDay(k, {planned:true}); break;
+    case "rate": saveDay(k, {rating: d.rating === +v ? null : +v}); break;
+    case "mood": saveDay(k, {mood: d.mood === +v ? null : +v}); break;
+    case "reviewed": { const pe = document.getElementById("prep"); saveDay(k, {reviewed:true, ...(pe ? {prep:pe.value.trim()} : {})}); toast(d.rating >= 4 ? "Good day. Sleep well." : "Logged. Tomorrow's a fresh start."); break; }
+    case "review-edit": saveDay(k, {reviewed:false}); break;
+    case "recap-close": c.recapSeen = v; saveCfg(); break;
+    case "recap-share": shareCard({kind:"recap", ws:v}); break;
+    case "badge-share": { const bb = badges().find(x => x.id === v); if (bb) shareCard({kind:"badge", b:bb}); break; }
+    case "trophies": S.trophies = true; S.detail = null; render(); window.scrollTo(0,0); break;
+    case "trophies-close": S.trophies = false; render(); break;
+    case "rit": c.rituals = {...(c.rituals||{}), [v]: (c.rituals||{})[v] === false}; saveCfg(); break;
     case "timer": putTimer({start:Date.now(), dur:n, hid:h.id, day:tk}); render(); break;
     case "timer-stop": stopTimer(false); break;
     case "pa": saveDay(k,{pa:!d.pa}); break;
@@ -868,12 +1120,21 @@ document.getElementById("app").addEventListener("click", e => {
     case "cal-day": S.calDay = S.calDay === v ? null : v; render(); break;
     case "day-check": setEnt(b.dataset.k, h.id, ent(b.dataset.k,h.id) ? undefined : 1); break;
     case "day-skip": setMap(b.dataset.k, "s", h.id, !skipped(b.dataset.k,h.id)); break;
-    case "h-type": h.type = v; h.target = v==="time"?30:v==="count"?8:1; if (v === "check") h.dir = "min"; saveCfg(); break;
-    case "h-dir": h.dir = v; saveCfg(); break;
-    case "h-tod": h.tod = v; saveCfg(); break;
-    case "h-day": h.sch.days = h.sch.days.includes(n) ? h.sch.days.filter(x=>x!==n) : [...h.sch.days,n].sort(); if (!h.sch.days.length) h.sch.days = [n]; saveCfg(); break;
-    case "h-color": h.color = v; saveCfg(); break;
-    case "h-ring": if (!h.ring && habits().filter(x=>x.ring).length >= 3) { toast("Three rings at most. Turn one off first."); break; } h.ring = !h.ring; saveCfg(); break;
+    case "h-type": h.type = v; h.target = v==="time"?30:v==="count"?8:1; if (v === "check") h.dir = "min"; upd(h); break;
+    case "h-icon": h.icon = v; upd(h); break;
+    case "sw-drop": { const d = S.ob.drop[b.dataset.a] || (S.ob.drop[b.dataset.a] = {}); d[v] = !d[v]; render(); break; }
+    case "tpl-drop": { const id = b.dataset.a; if (!S.pick?.[id]) { S.pick = {...(S.pick||{}), [id]: true}; render(); break; }
+      S.tdrop = S.tdrop || {}; const d = S.tdrop[id] || (S.tdrop[id] = {}); d[v] = !d[v]; render(); break; }
+    case "ob-sch": setSch(h, v); render(); break;
+    case "ob-n": { const f = b.dataset.f;
+      if (f === "sch.n") h.sch.n = Math.max(1, Math.min(7, (h.sch.n||3) + n));
+      else { const st = h.type === "time" ? 5 : h.step > 1 ? h.step : 1; h.target = Math.max(isMax(h) ? 0 : st, r1((+h.target||0) + n*st)); }
+      render(); break; }
+    case "h-dir": h.dir = v; upd(h); break;
+    case "h-tod": h.tod = v; upd(h); break;
+    case "h-day": h.sch.days = h.sch.days.includes(n) ? h.sch.days.filter(x=>x!==n) : [...h.sch.days,n].sort(); if (!h.sch.days.length) h.sch.days = [n]; upd(h); break;
+    case "h-color": h.color = v; upd(h); break;
+    case "h-ring": if (!h.ring && habits().filter(x=>x.ring).length >= 3) { toast("Three rings at most. Turn one off first."); break; } h.ring = !h.ring; upd(h); break;
     case "h-move": { const act = habits(), i = act.indexOf(h), o = act[i+n]; if (!o) break; const ia = c.habits.indexOf(h), ib = c.habits.indexOf(o); c.habits[ia] = o; c.habits[ib] = h; saveCfg(); break; }
     case "h-arch": h.archived = !h.archived; if (h.archived) { h.ring = false; S.detail = null; S.edit = false; } saveCfg(); toast(h.archived ? "Archived. Find it at the bottom of Habits." : "Restored"); break;
     case "h-del": if (S.confirm !== "h"+h.id) { S.confirm = "h"+h.id; render(); break; } S.confirm = null; c.habits = c.habits.filter(x=>x!==h); c.earn.conds = (c.earn.conds||[]).filter(x=>x.habitId!==h.id); S.detail = null; S.edit = false; saveCfg(); break;
@@ -882,8 +1143,8 @@ document.getElementById("app").addEventListener("click", e => {
     case "g-del": { const g = b.dataset.g; if (S.confirm !== "g"+g) { S.confirm = "g"+g; render(); break; } S.confirm = null; c.goals = c.goals.filter(x=>x.id!==g); saveCfg(); break; }
     case "p-add": { const g = c.goals.find(x=>x.id===b.dataset.g); g.parts.push({id:uid(), name:`Part ${g.parts.length+1}`, hours:10, pct:0}); saveCfg(); break; }
     case "p-del": { const g = c.goals.find(x=>x.id===b.dataset.g); g.parts = g.parts.filter(p=>p.id!==b.dataset.p); saveCfg(); break; }
-    case "tr": c.track = {...c.track, [v]: !c.track?.[v]}; saveCfg(); break;
-    case "set": c[v] = v === "group" || v === "tiny" ? c[v] === false : !c[v]; saveCfg(); break;
+    case "tr": c.track = {...c.track, [v]: v === "mood" ? c.track?.mood === false : !c.track?.[v]}; saveCfg(); break;
+    case "set": c[v] = ["group","tiny","anim","vibe","shields"].includes(v) ? c[v] === false : !c[v]; saveCfg(); break;
     case "ws": c.ws = v; saveCfg(); break;
     case "theme": c.theme = v; saveCfg(); break;
     case "skin": c.skin = v; saveCfg(); break;
@@ -902,17 +1163,19 @@ document.getElementById("app").addEventListener("change", e => {
   if (el.id === "prep") return saveDay(k,{prep: el.value.trim()});
   if (ds.f === "dayval") return setEnt(ds.k, ds.h, el.value === "" ? undefined : Math.max(0, +el.value || 0));
   if (ds.f === "daynote") return setMap(ds.k, "n", ds.h, el.value.trim());
-  if (ds.h) { const h = findH(ds.h, ds.w); if (!h) return; const f = ds.f;
+  if (ds.h) { const h = findH(ds.h); if (!h) return; const f = ds.f;
+    if (f === "icon") { h.icon = [...el.value.trim()].slice(0,4).join("") || iconOf(h); return upd(h); }
     if (f === "name") h.name = el.value.trim() || "Habit"; else if (f === "q" || f === "desc" || f === "unit") h[f] = el.value.trim();
     else if (f === "target") h.target = num(0, 100000, h.target); else if (f === "step") h.step = num(1, 10000, 1);
     else if (f === "presets") { const p = el.value.split(/[,\s]+/).map(Number).filter(x=>x>=1&&x<=600).slice(0,3); h.presets = p.length ? p : [25,10]; }
     else if (f === "sch.k") setSch(h, el.value); else if (f === "sch.n") h.sch.n = Math.round(num(h.sch.k==="interval"?2:1, h.sch.k==="week"?7:h.sch.k==="month"?31:90, h.sch.n));
     else if (f === "remind") h.remind = el.value || ""; else if (f === "start" && el.value) h.start = el.value; else return;
-    return ds.w === "setup" ? render() : saveCfg(); }
+    return upd(h); }
   if (!c) return;
   if (el.id === "why") c.why = el.value.trim();
   else if (el.id === "rules") c.rules = lines(el.value);
   else if (el.id === "roll") c.roll = +el.value || 0;
+  else if (el.id === "reviewAt") c.reviewAt = +el.value || 20;
   else if (el.id === "earnLabel") c.earn.label = el.value.trim() || "Reward";
   else if (el.id === "earnManual") c.earn.manual = lines(el.value);
   else if (ds.ec) c.earn.conds[+ds.ec][ds.f] = ds.f === "pct" ? num(5,100,70) : el.value;
@@ -922,6 +1185,7 @@ document.getElementById("app").addEventListener("change", e => {
   saveCfg();
 });
 
+document.getElementById("app").addEventListener("change", () => { S.inChange = false; });
 document.getElementById("app").addEventListener("click", e => {
   if (!e.target.closest('[data-act="export"]')) return;
   const blob = new Blob([JSON.stringify({app:"never-twice", v:1, exported:new Date().toISOString(), cfg:S.cfg, months:S.months}, null, 1)], {type:"application/json"});
@@ -994,10 +1258,44 @@ async function syncAll(preferRemote){
       if (stable(m) !== stable(loc)) { changed = true; if (id === "config") S.cfg = fixCfg(clone(m)); else S.months[id.slice(2)] = clone(m); LS.set(id, m); } });
     if (ups.length) await rest("/nt_docs?on_conflict=user_id,id", {method:"POST", prefer:"resolution=merge-duplicates,return=minimal", body:ups});
     A.last = Date.now(); LS.set("synced", A.last); A.msg = "";
+    try { await publishSummary(); await loadPartners(); } catch(e){}
     if (changed) { S.detail = hab(S.detail) ? S.detail : null; }
   } catch(e) { if (e.code !== "auth" && e.code !== "signed_out") A.msg = "Couldn't sync just now. It will try again."; }
   finally { A.syncing = false; render(); }
 }
+/* accountability partners */
+A.pub = null; A.partners = []; A.pmsg = "";
+const newCode = () => Array.from(crypto.getRandomValues(new Uint8Array(6)), b => "ABCDEFGHJKLMNPQRSTUVWXYZ23456789"[b % 32]).join("");
+function mySummary(){ S.memo = {}; const t = today(), tk = key(t), hs = habits(), req = hs.filter(h => mustToday(h,tk)), fin = h => kept(h,tk) || skipped(tk,h.id);
+  const top = hs.map(h => ({h, st:streaks(h)})).sort((a,b) => b.st.cur - a.st.cur)[0], show = !!S.cfg?.shareNames;
+  return {date:tk, done:req.filter(fin).length, total:req.length, score:weekScore(weekOf(t)), run:perfectRun(),
+    best: top && top.st.cur ? {n:top.st.cur, unit:top.st.unit, icon:iconOf(top.h), name: show ? top.h.name : null} : null,
+    habits: show ? req.map(h => ({icon:iconOf(h), name:h.name, done:fin(h)})) : null}; }
+async function publishSummary(){ if (!A.session || !S.cfg) return; const me = A.session.user.id;
+  if (!A.pub) { const r = await rest("/nt_public?select=code,name,show_names&user_id=eq." + me); A.pub = (r && r[0]) || null; }
+  const body = {user_id:me, code:A.pub?.code || newCode(), name:(S.cfg.shareName || "").slice(0,40) || null, show_names:!!S.cfg.shareNames, summary:mySummary(), updated_at:new Date().toISOString()};
+  try { await rest("/nt_public?on_conflict=user_id", {method:"POST", prefer:"resolution=merge-duplicates,return=minimal", body}); }
+  catch(e) { if (e.status === 409 && !A.pub) { body.code = newCode(); await rest("/nt_public?on_conflict=user_id", {method:"POST", prefer:"resolution=merge-duplicates,return=minimal", body}); } else throw e; }
+  A.pub = {code:body.code, name:body.name, show_names:body.show_names}; }
+async function loadPartners(){ if (!A.session) return; const me = A.session.user.id;
+  A.partners = (await rest("/nt_public?select=user_id,name,summary,updated_at&user_id=neq." + me + "&order=updated_at.desc")) || []; }
+function partnerCard(){ if (!A.session) return ""; const c = S.cfg, dis = A.busy ? "disabled" : "", tk = key(today());
+  const ago = iso => { const m = Math.round((Date.now() - new Date(iso).getTime())/60000); return m < 2 ? "just now" : m < 60 ? `${m} min ago` : m < 1440 ? `${Math.round(m/60)} h ago` : `${Math.round(m/1440)} d ago`; };
+  const list = A.partners.map(p => { const s = p.summary || {}, fresh = s.date === tk;
+    return `<div class="ins"><div class="row between"><b>${esc(p.name || "Your partner")}</b><span class="note">updated ${ago(p.updated_at)}</span></div>
+      <div class="stat3"><div class="stat"><span class="k">Today</span><span class="v">${fresh ? `${s.done}/${s.total}` : "–"}</span></div><div class="stat"><span class="k">Week</span><span class="v">${s.score ?? "–"}</span></div><div class="stat"><span class="k">Best streak</span><span class="v">${s.best ? `🔥 ${s.best.n}` : "–"}</span></div></div>
+      ${fresh && Array.isArray(s.habits) && s.habits.length ? `<div class="small">${s.habits.map(x => `${x.done ? "✅" : "⬜"} ${esc(x.icon)} ${esc(x.name)}`).join(" · ")}</div>` : ""}
+      ${fresh && s.total && s.done === s.total ? `<div class="small" style="color:var(--good)">🎉 Day complete${s.run > 1 ? ` · ${s.run} perfect days in a row` : ""}</div>` : !fresh ? `<div class="note">Hasn't opened the app today yet.</div>` : ""}
+      <button class="btn sm danger" data-acc="unpair" data-v="${esc(p.user_id)}" ${dis} style="align-self:flex-start">${A.unpair === p.user_id ? "Tap again to remove" : "Remove partner"}</button></div>`; }).join("");
+  return `<div class="card"><h2>🤝 Accountability partners</h2>
+    <p class="small muted">Pair with a friend and see each other's progress. They need the app and an account too.</p>
+    <label class="f">Your name, as partners see it<input type="text" id="shareName" maxlength="40" value="${esc(c.shareName || "")}" placeholder="e.g. Ved"></label>
+    <div class="f">What partners can see${seg("share-names", [["0","Progress only"],["1","Progress + habit names"]], c.shareNames ? "1" : "0")}</div>
+    <div class="ins"><span class="small">Your partner code</span><div class="row between"><b class="num" style="font-size:22px;letter-spacing:.12em">${esc(A.pub?.code || "…")}</b>${A.pub?.code ? `<button class="btn sm" data-acc="copy-code">Copy</button>` : ""}</div><span class="note">Send this to a friend. When they enter it, you're paired both ways.</span></div>
+    <div class="row"><input type="text" id="pairCode" maxlength="8" placeholder="Friend's code" style="flex:1;text-transform:uppercase;letter-spacing:.1em"><button class="btn primary" data-acc="pair" ${dis}>Pair</button></div>
+    ${A.pmsg ? `<p class="note" style="color:var(--bad)">${esc(A.pmsg)}</p>` : ""}
+    ${list || `<p class="note">No partners yet.</p>`}</div>`; }
+S.beforeReset = async () => { if (!A.session) return; clearTimeout(A._t); try { await pushOff(); } catch(e){} try { await authCall("/logout", {}, A.session.access_token); } catch(e){} setSession(null); A.step = "idle"; A.last = null; try { localStorage.removeItem("nt_synced"); } catch(e){} };
 S.afterWrite = () => { if (!A.session) return; clearTimeout(A._t); A._t = setTimeout(() => syncAll(), 2000); };
 document.addEventListener("visibilitychange", () => { if (document.visibilityState === "visible") syncAll(); });
 
@@ -1017,15 +1315,19 @@ async function pushOff(){ const sub = await getSub(); if (!sub) { A.push = "off"
   try { await rest("/nt_push?endpoint=eq." + encodeURIComponent(ep), {method:"DELETE"}); } catch(e){} A.push = "off"; }
 
 /* account card in Settings */
-function accountCard(){
+function accountCard(){ return accountCore() + partnerCard(); }
+function accountCore(){
   const c = S.cfg, s = A.session, msg = A.msg ? `<p class="note" style="color:var(--bad)">${esc(A.msg)}</p>` : "", dis = A.busy ? "disabled" : "";
   if (!cloud) return `<div class="card"><h2>Account and sync</h2><p class="note">Sync and reminders aren't switched on for this copy of the app. Everything is saved on this device.</p></div>`;
-  if (!s) return `<div class="card"><h2>Account and sync</h2><p class="small muted">Sign in to keep your habits on all your devices and to get reminders. It's optional. Without an account, everything stays on this device.</p>
-    ${A.step === "code" ? `<p class="small">We emailed a 6-digit code to <b>${esc(A.email)}</b>. It can take a minute. Check your spam folder too.</p>
-      <label class="f">Code<input type="text" id="accCode" inputmode="numeric" autocomplete="one-time-code" maxlength="10" placeholder="123456"></label>
-      <div class="row"><button class="btn primary" data-acc="verify" ${dis}>Sign in</button><button class="btn" data-acc="reset" ${dis}>Use a different email</button></div>`
-    : `<label class="f">Email<input type="email" id="accEmail" autocomplete="email" value="${esc(A.email)}" placeholder="you@example.com"></label>
-      <button class="btn primary" data-acc="send" ${dis}>Email me a sign-in code</button>`}${msg}</div>`;
+  if (!s) { const make = A.mode === "create", link = A.step === "link";
+    return `<div class="card"><h2>Account and sync</h2><p class="small muted">Sign in to keep your habits on all your devices, get reminders and pair with friends. It's optional. Without an account, everything stays on this device.</p>
+    ${link ? `<p class="small">We emailed a sign-in link to <b>${esc(A.email)}</b>. Open the email on this device and tap the link; it brings you back here signed in. Check your spam folder too.</p><button class="btn" data-acc="reset" ${dis}>Back</button>`
+    : `${seg("acc-mode", [["in","Sign in"],["create","Create account"]], make ? "create" : "in")}
+      <label class="f">Email<input type="email" id="accEmail" autocomplete="email" value="${esc(A.email)}" placeholder="you@example.com"></label>
+      <label class="f">Password<input type="password" id="accPass" autocomplete="${make ? "new-password" : "current-password"}" placeholder="${make ? "At least 8 characters" : "Your password"}"></label>
+      ${make ? `<p class="note">There's no "forgot password" option yet, so save it in your phone's password manager.</p>` : ""}
+      <button class="btn primary" data-acc="${make ? "signup" : "signin"}" ${dis}>${make ? "Create account" : "Sign in"}</button>
+      <details><summary>Other ways to sign in</summary><div class="col" style="margin-top:8px"><p class="note">Get a one-time sign-in link by email instead. Until the app owner sets up an email service, this only reaches the owner's own address.</p><button class="btn sm" data-acc="send" ${dis}>Email me a sign-in link</button></div></details>`}${msg}</div>`; }
   if (A.step === "choose") return `<div class="card"><h2>Which habits do you want to keep?</h2><p class="small muted">Your account already has habits saved, and this device has its own. Logged days from both are kept either way.</p>
     <button class="btn primary" data-acc="use-remote" ${dis}>Use the habits from my account</button><button class="btn" data-acc="use-local" ${dis}>Keep this device's habits</button>${msg}</div>`;
   const last = A.last ? new Date(A.last).toLocaleString("en-GB", {day:"numeric", month:"short", hour:"2-digit", minute:"2-digit"}) : "not yet";
@@ -1049,10 +1351,16 @@ async function afterSignIn(){
 }
 document.getElementById("app").addEventListener("click", async e => {
   const b = e.target.closest("[data-acc]"); if (!b || A.busy) return; const act = b.dataset.acc;
-  if (act !== "wipe") A.confirm = false; A.busy = true; A.msg = "";
+  if (act !== "wipe") A.confirm = false; if (act !== "unpair") A.unpair = null; A.busy = true; A.msg = "";
   try {
-    if (act === "send") { const em = (document.getElementById("accEmail")?.value || "").trim().toLowerCase();
-      if (!/^\S+@\S+\.\S+$/.test(em)) A.msg = "Enter a valid email address."; else { A.email = em; await authCall("/otp", {email:em, create_user:true}); A.step = "code"; } }
+    const emv = () => (document.getElementById("accEmail")?.value || "").trim().toLowerCase(), okEm = em => /^\S+@\S+\.\S+$/.test(em);
+    if (act === "send") { const em = emv();
+      if (!okEm(em)) A.msg = "Enter a valid email address."; else { A.email = em; await authCall("/otp?redirect_to=" + encodeURIComponent(location.origin + location.pathname), {email:em, create_user:true}); A.step = "link"; } }
+    else if (act === "signin" || act === "signup") { const em = emv(), pw = document.getElementById("accPass")?.value || ""; A.email = em;
+      if (!okEm(em)) A.msg = "Enter a valid email address."; else if (act === "signup" && pw.length < 8) A.msg = "Use at least 8 characters for the password."; else if (!pw) A.msg = "Enter your password.";
+      else { const j = act === "signup" ? await authCall("/signup", {email:em, password:pw}) : await authCall("/token?grant_type=password", {email:em, password:pw});
+        if (!j.access_token) A.msg = "Account created, but Supabase is still set to confirm emails first. Turn off \"Confirm email\" (see the setup guide), then sign in.";
+        else { setSession(j); A.busy = false; await afterSignIn(); toast(act === "signup" ? "Account created" : "Signed in"); } } }
     else if (act === "verify") { const code = (document.getElementById("accCode")?.value || "").replace(/\s/g,"");
       if (!code) A.msg = "Enter the code from the email."; else { setSession(await authCall("/verify", {type:"email", email:A.email, token:code})); A.busy = false; await afterSignIn(); toast("Signed in"); } }
     else if (act === "reset") { A.step = "idle"; }
@@ -1060,15 +1368,29 @@ document.getElementById("app").addEventListener("click", async e => {
     else if (act === "sync") { await syncAll(); if (!A.msg) toast("Synced"); }
     else if (act === "push-on") { await pushOn(); }
     else if (act === "push-off") { await pushOff(); }
-    else if (act === "signout") { try { await pushOff(); } catch(e){} try { await authCall("/logout", {}, A.session.access_token); } catch(e){} setSession(null); A.step = "idle"; toast("Signed out. Your data is still on this device."); }
+    else if (act === "signout") { try { await pushOff(); } catch(e){} try { await authCall("/logout", {}, A.session.access_token); } catch(e){} setSession(null); A.step = "idle"; A.pub = null; A.partners = []; toast("Signed out. Your data is still on this device."); }
+    else if (act === "pair") { const code = (document.getElementById("pairCode")?.value || "").trim().toUpperCase(); A.pmsg = "";
+      if (!/^[A-Z0-9]{6}$/.test(code)) A.pmsg = "Partner codes are 6 letters and numbers."; else if (code === A.pub?.code) A.pmsg = "That's your own code.";
+      else { try { await publishSummary(); const r = await rest("/rpc/nt_join", {method:"POST", body:{p_code:code}}); await loadPartners(); toast(`Paired${r && r.name ? ` with ${r.name}` : ""}`); }
+        catch(e) { A.pmsg = e.status === 400 || e.status === 404 ? "No one has that code. Check it with your friend." : "Couldn't pair just now. Try again."; } } }
+    else if (act === "unpair") { if (A.unpair !== b.dataset.v) { A.unpair = b.dataset.v; } else { A.unpair = null; await rest("/rpc/nt_leave", {method:"POST", body:{p_partner:b.dataset.v}}); await loadPartners(); toast("Partner removed"); } }
+    else if (act === "copy-code") { try { await navigator.clipboard.writeText(A.pub.code); toast("Code copied"); } catch(e) { toast("Your code is " + A.pub.code); } }
     else if (act === "wipe") { if (!A.confirm) A.confirm = true; else { A.confirm = false; const id = A.session.user.id; try { await pushOff(); } catch(e){}
       await rest("/nt_docs?user_id=eq." + id, {method:"DELETE"}); await rest("/nt_push?user_id=eq." + id, {method:"DELETE"});
+      try { for (const p of A.partners) await rest("/rpc/nt_leave", {method:"POST", body:{p_partner:p.user_id}}); await rest("/nt_public?user_id=eq." + id, {method:"DELETE"}); } catch(e){} A.pub = null; A.partners = [];
       try { await authCall("/logout", {}, A.session.access_token); } catch(e){} setSession(null); toast("Cloud data deleted"); } }
   } catch(err) {
-    A.msg = err.status === 429 ? "Too many tries. Wait a minute, then try again." : act === "verify" ? "That code didn't work. Check it, or ask for a new one." : act === "send" ? (err.msg || "Couldn't send the code. Check the address and try again.") : act.startsWith("push") ? "Couldn't change reminders on this device." : "That didn't work. Check your connection and try again.";
+    const em_ = String(err.msg || "").toLowerCase();
+    A.msg = err.status === 429 ? "Too many tries. Wait a minute, then try again."
+      : act === "signin" ? (em_.includes("confirm") ? "This email isn't confirmed yet. Turn off \"Confirm email\" in Supabase, then try again." : err.status === 400 ? "Wrong email or password." : "Couldn't sign in. Check your connection and try again.")
+      : act === "signup" ? (em_.includes("already") || err.status === 422 && em_.includes("regist") ? "That email already has an account. Switch to Sign in." : err.msg && err.status < 500 ? err.msg : "Couldn't create the account. Check your connection and try again.")
+      : act === "verify" ? "That code didn't work. Check it, or ask for a new one." : act === "send" ? (err.msg || "Couldn't send the code. Check the address and try again.") : act.startsWith("push") ? "Couldn't change reminders on this device." : "That didn't work. Check your connection and try again.";
   } finally { A.busy = false; render(); }
 });
-document.getElementById("app").addEventListener("change", e => { if (e.target.id === "sumTime" && S.cfg) { S.cfg.summary = e.target.value || ""; saveCfg(); } });
+document.getElementById("app").addEventListener("change", e => { if (e.target.id === "sumTime" && S.cfg) { S.cfg.summary = e.target.value || ""; saveCfg(); }
+  if (e.target.id === "shareName" && S.cfg) { S.cfg.shareName = e.target.value.trim().slice(0,40); saveCfg(); } });
+document.getElementById("app").addEventListener("click", e => { const b = e.target.closest('[data-act="acc-mode"]'); if (!b) return; const em = document.getElementById("accEmail"); if (em) A.email = em.value.trim(); A.mode = b.dataset.v; A.msg = ""; render(); });
+document.getElementById("app").addEventListener("click", e => { const b = e.target.closest('[data-act="share-names"]'); if (!b || !S.cfg) return; S.cfg.shareNames = b.dataset.v === "1"; saveCfg(); });
 (async () => { // start-up: finish a sign-in link if one was used, then sync
   S.signedIn = !!A.session; setCan(); if (!cloud) return;
   if (location.hash.includes("access_token=")) { const q = new URLSearchParams(location.hash.slice(1));
